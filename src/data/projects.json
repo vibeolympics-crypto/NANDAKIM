@@ -1,0 +1,191 @@
+{
+  "projects": [
+    {
+      "id": "tetris-game",
+      "title": "테트리스 게임",
+      "description": "Google AI Studio - build로 만들어본 클래식 테트리스 게임입니다. 직접 플레이하며 즐겨보세요.",
+      "thumbnail": "/placeholders/tetris.svg",
+      "category": "게임",
+      "year": "2025",
+      "featured": true,
+      "order": 1,
+      "technologies": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "Tailwind CSS"
+      ],
+      "details": {
+        "overview": "모던 웹 기술로 구현한 인터랙티브 테트리스 게임입니다. 클래식한 게임플레이와 반응형 디자인을 제공합니다.",
+        "challenges": "게임 로직의 복잡한 회전과 충돌 감지, 그리고 부드러운 애니메이션 구현이 주요 과제였습니다.",
+        "solutions": "상태 관리를 통한 명확한 게임 로직 구현과 CSS 애니메이션을 활용하여 성능을 최적화했습니다.",
+        "results": "빠른 로딩 시간(1.5KB gzip)과 매끄러운 플레이 경험을 제공합니다."
+      },
+      "links": {
+        "demo": "/games/tetris/index.html",
+        "github": "https://github.com/example/tetris-game"
+      }
+    },
+    {
+      "id": "project-1",
+      "title": "E-커머스 플랫폼",
+      "description": "React와 Node.js를 활용한 풀스택 쇼핑몰 구축",
+      "thumbnail": "/placeholders/project1.svg",
+      "category": "웹 개발",
+      "year": "2024",
+      "featured": true,
+      "order": 2,
+      "technologies": [
+        "React",
+        "Node.js",
+        "MongoDB",
+        "Express",
+        "Tailwind CSS"
+      ],
+      "details": {
+        "overview": "현대적인 UI/UX를 갖춘 전자상거래 플랫폼입니다. 사용자 인증, 장바구니, 결제 시스템, 관리자 대시보드 등 완전한 기능을 제공합니다.",
+        "challenges": "대용량 트래픽 처리와 실시간 재고 관리 시스템 구현이 주요 과제였습니다.",
+        "solutions": "Redis 캐싱과 WebSocket을 활용하여 실시간 업데이트를 구현하고, 로드 밸런싱으로 성능을 최적화했습니다.",
+        "results": "월 10만 명의 활성 사용자와 99.9%의 가동 시간을 달성했습니다."
+      },
+      "links": {
+        "demo": "https://example.com/demo1",
+        "github": "https://github.com/example/project1"
+      }
+    },
+    {
+      "id": "project-2",
+      "title": "AI 챗봇 서비스",
+      "description": "자연어 처리 기반 고객 지원 챗봇 시스템",
+      "thumbnail": "/placeholders/project2.svg",
+      "category": "AI/ML",
+      "year": "2024",
+      "featured": true,
+      "order": 3,
+      "technologies": [
+        "Python",
+        "TensorFlow",
+        "FastAPI",
+        "React",
+        "PostgreSQL"
+      ],
+      "details": {
+        "overview": "머신러닝을 활용한 지능형 고객 지원 챗봇입니다. 자연어를 이해하고 맥락에 맞는 답변을 제공합니다.",
+        "challenges": "다양한 사용자 의도를 정확하게 파악하고 적절한 응답을 생성하는 것이 핵심 과제였습니다.",
+        "solutions": "BERT 모델을 파인튜닝하고 대화 히스토리를 활용한 컨텍스트 인식 시스템을 구축했습니다.",
+        "results": "고객 문의 응답 시간을 70% 단축하고 만족도를 85%로 향상시켰습니다."
+      },
+      "links": {
+        "demo": "https://example.com/demo2",
+        "github": "https://github.com/example/project2"
+      }
+    },
+    {
+      "id": "project-3",
+      "title": "실시간 협업 도구",
+      "description": "팀 프로젝트를 위한 실시간 협업 플랫폼",
+      "thumbnail": "/placeholders/project3.svg",
+      "category": "협업 도구",
+      "year": "2023",
+      "featured": true,
+      "order": 4,
+      "technologies": [
+        "Vue.js",
+        "Socket.io",
+        "Redis",
+        "Docker",
+        "AWS"
+      ],
+      "details": {
+        "overview": "실시간 문서 편집, 화상 회의, 작업 관리 기능을 통합한 협업 플랫폼입니다.",
+        "challenges": "여러 사용자의 동시 편집을 충돌 없이 처리하는 것이 가장 큰 도전이었습니다.",
+        "solutions": "Operational Transformation 알고리즘을 구현하여 실시간 동기화를 달성했습니다.",
+        "results": "500개 이상의 팀이 사용 중이며, 평균 생산성이 40% 향상되었습니다."
+      },
+      "links": {
+        "demo": "https://example.com/demo3",
+        "github": "https://github.com/example/project3"
+      }
+    },
+    {
+      "id": "project-4",
+      "title": "모바일 피트니스 앱",
+      "description": "AI 기반 개인 맞춤형 운동 추천 앱",
+      "thumbnail": "/placeholders/project4.svg",
+      "category": "모바일",
+      "year": "2023",
+      "featured": true,
+      "order": 5,
+      "technologies": [
+        "React Native",
+        "Firebase",
+        "TensorFlow Lite",
+        "GraphQL"
+      ],
+      "details": {
+        "overview": "사용자의 체력 수준과 목표에 맞춘 개인화된 운동 프로그램을 제공하는 모바일 앱입니다.",
+        "challenges": "오프라인 환경에서도 작동하고 배터리 소모를 최소화해야 했습니다.",
+        "solutions": "로컬 데이터베이스와 백그라운드 동기화를 구현하고, 경량화된 ML 모델을 사용했습니다.",
+        "results": "앱스토어 평점 4.8점, 50만 다운로드를 달성했습니다."
+      },
+      "links": {
+        "demo": "https://example.com/demo4",
+        "github": "https://github.com/example/project4"
+      }
+    },
+    {
+      "id": "project-5",
+      "title": "데이터 시각화 대시보드",
+      "description": "비즈니스 인텔리전스를 위한 인터랙티브 대시보드",
+      "thumbnail": "/placeholders/project5.svg",
+      "category": "데이터 분석",
+      "year": "2023",
+      "featured": true,
+      "order": 6,
+      "technologies": [
+        "D3.js",
+        "React",
+        "Python",
+        "Pandas",
+        "Elasticsearch"
+      ],
+      "details": {
+        "overview": "복잡한 데이터를 직관적인 차트와 그래프로 시각화하는 대시보드 솔루션입니다.",
+        "challenges": "대용량 데이터를 실시간으로 처리하고 부드러운 인터랙션을 제공해야 했습니다.",
+        "solutions": "데이터 집계를 백엔드에서 처리하고, 가상 스크롤링과 레이지 로딩을 구현했습니다.",
+        "results": "데이터 분석 시간을 60% 단축하고 의사결정 속도를 향상시켰습니다."
+      },
+      "links": {
+        "demo": "https://example.com/demo5",
+        "github": "https://github.com/example/project5"
+      }
+    },
+    {
+      "id": "project-6",
+      "title": "블록체인 지갑",
+      "description": "안전한 암호화폐 관리 솔루션",
+      "thumbnail": "/placeholders/project6.svg",
+      "category": "블록체인",
+      "year": "2022",
+      "featured": true,
+      "order": 7,
+      "technologies": [
+        "Solidity",
+        "Web3.js",
+        "React",
+        "Ethereum",
+        "IPFS"
+      ],
+      "details": {
+        "overview": "다중 암호화폐를 지원하는 안전한 디지털 지갑 애플리케이션입니다.",
+        "challenges": "최고 수준의 보안을 유지하면서도 사용자 친화적인 인터페이스를 제공해야 했습니다.",
+        "solutions": "하드웨어 지갑 통합, 다중 서명, 생체 인증 등 다층 보안 시스템을 구축했습니다.",
+        "results": "보안 감사를 통과하고 10만 명 이상의 사용자를 확보했습니다."
+      },
+      "links": {
+        "demo": "https://example.com/demo6",
+        "github": "https://github.com/example/project6"
+      }
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "contact": {
+    "email": "airroad1004@gmail.com",
+    "phone": "010-8887-9487",
+    "address": "Seoul, South Korea",
+    "socialMedia": {
+      "twitter": "https://twitter.com/wonkim",
+      "linkedin": "https://linkedin.com/in/wonkim",
+      "instagram": "https://instagram.com/wonkim",
+      "youtube": "https://youtube.com/@wonkim"
+    }
+  },
+  "footer": {
+    "companyInfo": "Full-stack developer and creative professional.",
+    "quickLinks": [
+      { "id": "1", "label": "About", "href": "#about", "order": 1 },
+      { "id": "2", "label": "Projects", "href": "#projects", "order": 2 },
+      { "id": "3", "label": "Blog", "href": "#blog", "order": 3 },
+      { "id": "4", "label": "Contact", "href": "#contact", "order": 4 }
+    ],
+    "resources": [
+      { "id": "1", "label": "Documentation", "href": "#docs", "order": 1 },
+      { "id": "2", "label": "Tutorials", "href": "#tutorials", "order": 2 },
+      { "id": "3", "label": "Help Center", "href": "#help", "order": 3 }
+    ],
+    "copyright": "© 2024 Your Name. All rights reserved."
+  },
+  "map": {
+    "apiKey": "",
+    "locationName": "Seoul, South Korea",
+    "coordinates": { "lat": 37.5665, "lng": 126.978 },
+    "zoom": 15,
+    "provider": "google"
+  },
+  "updatedAt": "2024-11-28T00:00:00.000Z"
+}

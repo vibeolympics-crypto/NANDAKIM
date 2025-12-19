@@ -1,0 +1,23 @@
+name = "naija-nexus"
+pages_build_output_dir = "dist"
+
+# 글로벌 환경 변수 (모든 환경에서 사용)
+[vars]
+VITE_BLOG_RSS_URL = "https://rss.blog.naver.com/02korea-.xml"
+
+# 환경 설정
+[env.preview]
+name = "naija-nexus-preview"
+vars = { ENVIRONMENT = "preview", API_BASE_URL = "https://preview.airroad1004.com", VITE_BLOG_RSS_URL = "https://rss.blog.naver.com/02korea-.xml" }
+
+[env.production]
+name = "naija-nexus-production"
+vars = { ENVIRONMENT = "production", API_BASE_URL = "https://airroad1004.com", VITE_BLOG_RSS_URL = "https://rss.blog.naver.com/02korea-.xml" }
+
+# 호환성 설정
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# 로깅
+[observability]
+enabled = true

@@ -1,0 +1,2 @@
+// 콘솔에서 실행: 
+// fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id=UCXuqSBlHAE6Xw-yeJA7Awn8')).then(r => r.text()).then(t => { console.log('LENGTH:', t.length); const p = new DOMParser(); const x = p.parseFromString(t, 'text/xml'); const e = x.getElementsByTagNameNS('http://www.w3.org/2005/Atom', 'entry'); console.log('ENTRIES:', e.length); if (e[0]) { const t = e[0].getElementsByTagNameNS('http://www.w3.org/2005/Atom', 'title')[0]; console.log('TITLE:', t?.textContent); } })

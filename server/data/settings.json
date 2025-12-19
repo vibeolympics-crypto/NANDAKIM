@@ -1,0 +1,31 @@
+{
+  "fonts": {
+    "family": "Inter",
+    "baseSize": 16,
+    "headingScale": 1.5,
+    "lineHeight": 1.6,
+    "source": "google"
+  },
+  "colors": {
+    "light": {
+      "primary": "#3b82f6",
+      "secondary": "#8b5cf6",
+      "background": "#ffffff",
+      "text": "#1f2937"
+    },
+    "dark": {
+      "primary": "#60a5fa",
+      "secondary": "#a78bfa",
+      "background": "#1f2937",
+      "text": "#f9fafb"
+    }
+  },
+  "layout": {
+    "sidebarWidth": 280,
+    "containerMaxWidth": 1200,
+    "sectionSpacing": 80,
+    "buttonStyle": "rounded"
+  },
+  "updatedAt": "2025-11-30T14:04:03.369Z",
+  "updatedBy": "won kim"
+}

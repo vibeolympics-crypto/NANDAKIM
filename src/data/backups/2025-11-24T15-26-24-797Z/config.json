@@ -1,0 +1,51 @@
+{
+  "site": {
+    "title": "Won Kim Portfolio",
+    "description": "Portfolio showcasing projects, events, and professional activities",
+    "author": "Won Kim",
+    "email": "contact@wonkim.com",
+    "phone": "+82-10-1234-5678"
+  },
+  "social": {
+    "github": "https://github.com/wonkim",
+    "linkedin": "https://linkedin.com/in/wonkim",
+    "twitter": "https://twitter.com/wonkim",
+    "youtube": "https://youtube.com/@wonkim"
+  },
+  "map": {
+    "provider": "google",
+    "coordinates": {
+      "lat": 37.5665,
+      "lng": 126.978
+    },
+    "zoom": 15,
+    "apiKey": ""
+  },
+  "features": {
+    "enableBlog": true,
+    "enableEvents": true,
+    "enableProjects": true,
+    "enableContact": true,
+    "enableMap": true
+  },
+  "hero": {
+    "title": "Won Kim Portfolio",
+    "subtitle": "Portfolio showcasing projects, events, and professional activities",
+    "backgroundImage": {
+      "light": "/assets/hero-bg.jpg",
+      "dark": "/assets/hero-bg.jpg"
+    },
+    "ctaButtons": {
+      "primary": {
+        "text": "View Projects",
+        "link": "#projects"
+      },
+      "secondary": {
+        "text": "Contact Me",
+        "link": "#contact"
+      }
+    },
+    "updatedAt": "2025-11-24T15:20:22.210Z",
+    "updatedBy": "admin"
+  }
+}

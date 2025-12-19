@@ -1,0 +1,76 @@
+{
+  "contact": {
+    "email": "airroad1004@gmail.com",
+    "phone": "010-8887-9487",
+    "address": "korea",
+    "socialMedia": {}
+  },
+  "footer": {
+    "companyInfo": "Full-stack developer and creative professional.",
+    "quickLinks": [
+      {
+        "id": "1",
+        "label": "About",
+        "href": "#about",
+        "order": 1
+      },
+      {
+        "id": "2",
+        "label": "Projects",
+        "href": "#projects",
+        "order": 2
+      },
+      {
+        "id": "3",
+        "label": "Content",
+        "href": "#Content",
+        "order": 3
+      },
+      {
+        "id": "4",
+        "label": "Contact",
+        "href": "#Contact",
+        "order": 4
+      },
+      {
+        "id": "1764300021592",
+        "label": "Map",
+        "href": "#Map",
+        "order": 5
+      }
+    ],
+    "resources": [
+      {
+        "id": "1",
+        "label": "Documentation",
+        "href": "#docs",
+        "order": 1
+      },
+      {
+        "id": "2",
+        "label": "Tutorials",
+        "href": "#tutorials",
+        "order": 2
+      },
+      {
+        "id": "3",
+        "label": "Help Center",
+        "href": "#help",
+        "order": 3
+      }
+    ],
+    "copyright": "© 2024 Your Name. All rights reserved."
+  },
+  "map": {
+    "apiKey": "",
+    "locationName": "Seoul, South Korea",
+    "coordinates": {
+      "lat": 37.5665,
+      "lng": 126.978
+    },
+    "zoom": 15,
+    "provider": "google"
+  },
+  "updatedAt": "2025-11-28T03:25:46.112Z",
+  "updatedBy": "won kim"
+}

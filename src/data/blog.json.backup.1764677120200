@@ -1,0 +1,176 @@
+{
+  "posts": []
+}
+      "category": "TypeScript",
+      "tags": [
+        "TypeScript",
+        "JavaScript",
+        "Programming"
+      ],
+      "image": "/placeholder.svg",
+      "readTime": 10,
+      "featured": true,
+      "status": "published"
+    },
+    {
+      "id": "blog-3",
+      "title": "웹 성능 최적화 실전 가이드",
+      "summary": "Lighthouse 점수 90점 이상 달성하기. 이미지 최적화, 코드 스플리팅, 캐싱 전략까지 모든 것을 다룹니다.",
+      "excerpt": "Lighthouse 점수 90점 이상 달성하기. 이미지 최적화, 코드 스플리팅, 캐싱 전략까지 모든 것을 다룹니다.",
+      "content": "웹 성능은 사용자 경험과 SEO에 직접적인 영향을 미칩니다. 실제 프로젝트에서 성능을 50% 향상시킨 방법을 단계별로 설명합니다.",
+      "author": "박성능",
+      "date": "2024-11-20",
+      "category": "Performance",
+      "tags": [
+        "Performance",
+        "Optimization",
+        "Web Vitals",
+        "SEO"
+      ],
+      "image": "/placeholder.svg",
+      "readTime": 12,
+      "featured": true,
+      "status": "published"
+    },
+    {
+      "id": "blog-4",
+      "title": "Next.js 14 App Router 마스터하기",
+      "summary": "Server Components, Streaming, 그리고 새로운 라우팅 시스템을 실전 예제로 배워봅니다.",
+      "excerpt": "Server Components, Streaming, 그리고 새로운 라우팅 시스템을 실전 예제로 배워봅니다.",
+      "content": "Next.js 14의 App Router는 React Server Components를 완벽하게 지원합니다. 실제 프로젝트 구조와 함께 모범 사례를 소개합니다.",
+      "author": "최넥스트",
+      "date": "2024-11-18",
+      "category": "Next.js",
+      "tags": [
+        "Next.js",
+        "React",
+        "SSR",
+        "Full Stack"
+      ],
+      "image": "/placeholder.svg",
+      "readTime": 15,
+      "featured": false,
+      "status": "published"
+    },
+    {
+      "id": "blog-5",
+      "title": "모던 CSS: Grid와 Flexbox 완벽 활용",
+      "summary": "복잡한 레이아웃을 간단하게. CSS Grid와 Flexbox를 조합하여 반응형 디자인을 구현하는 방법을 알아봅니다.",
+      "excerpt": "복잡한 레이아웃을 간단하게. CSS Grid와 Flexbox를 조합하여 반응형 디자인을 구현하는 방법을 알아봅니다.",
+      "content": "CSS Grid와 Flexbox는 현대 웹 레이아웃의 핵심입니다. 실무에서 자주 사용되는 패턴과 트릭을 예제와 함께 설명합니다.",
+      "author": "정디자인",
+      "date": "2024-11-15",
+      "category": "CSS",
+      "tags": [
+        "CSS",
+        "Layout",
+        "Responsive Design",
+        "Frontend"
+      ],
+      "image": "/placeholder.svg",
+      "readTime": 7,
+      "featured": false,
+      "status": "published"
+    },
+    {
+      "id": "blog-6",
+      "title": "Node.js 마이크로서비스 아키텍처 구축",
+      "summary": "확장 가능한 백엔드 시스템 설계. Docker, Kubernetes, 그리고 메시지 큐를 활용한 실전 가이드입니다.",
+      "excerpt": "확장 가능한 백엔드 시스템 설계. Docker, Kubernetes, 그리고 메시지 큐를 활용한 실전 가이드입니다.",
+      "content": "마이크로서비스 아키텍처는 대규모 애플리케이션의 필수 요소입니다. 실제 프로덕션 환경에서 검증된 패턴을 공유합니다.",
+      "author": "강백엔드",
+      "date": "2024-11-12",
+      "category": "Backend",
+      "tags": [
+        "Node.js",
+        "Microservices",
+        "Docker",
+        "Kubernetes"
+      ],
+      "image": "/placeholder.svg",
+      "readTime": 20,
+      "featured": false,
+      "status": "published"
+    },
+    {
+      "id": "blog-7",
+      "title": "GraphQL vs REST: 올바른 선택하기",
+      "summary": "API 설계의 두 가지 접근 방식을 비교하고, 프로젝트에 맞는 선택을 하는 방법을 알아봅니다.",
+      "excerpt": "API 설계의 두 가지 접근 방식을 비교하고, 프로젝트에 맞는 선택을 하는 방법을 알아봅니다.",
+      "content": "GraphQL과 REST API는 각각의 장단점이 있습니다. 실제 사용 사례를 통해 어떤 상황에서 무엇을 선택해야 하는지 설명합니다.",
+      "author": "윤API",
+      "date": "2024-11-10",
+      "category": "API",
+      "tags": [
+        "GraphQL",
+        "REST",
+        "API Design",
+        "Backend"
+      ],
+      "image": "/placeholder.svg",
+      "readTime": 9,
+      "featured": false,
+      "status": "published"
+    },
+    {
+      "id": "blog-8",
+      "title": "웹 접근성: 모두를 위한 웹 만들기",
+      "summary": "WCAG 2.1 가이드라인을 준수하여 접근 가능한 웹사이트를 구축하는 실전 방법을 소개합니다.",
+      "excerpt": "WCAG 2.1 가이드라인을 준수하여 접근 가능한 웹사이트를 구축하는 실전 방법을 소개합니다.",
+      "content": "웹 접근성은 법적 요구사항이자 윤리적 책임입니다. 스크린 리더, 키보드 네비게이션, 색상 대비 등을 고려한 개발 방법을 다룹니다.",
+      "author": "임접근",
+      "date": "2024-11-08",
+      "category": "Accessibility",
+      "tags": [
+        "Accessibility",
+        "WCAG",
+        "Inclusive Design",
+        "UX"
+      ],
+      "image": "/placeholder.svg",
+      "readTime": 11,
+      "featured": false,
+      "status": "published"
+    },
+    {
+      "id": "blog-9",
+      "title": "React Testing Library로 효과적인 테스트 작성하기",
+      "summary": "사용자 관점의 테스트 작성법. 유지보수 가능하고 신뢰할 수 있는 테스트 코드를 만드는 방법입니다.",
+      "excerpt": "사용자 관점의 테스트 작성법. 유지보수 가능하고 신뢰할 수 있는 테스트 코드를 만드는 방법입니다.",
+      "content": "좋은 테스트는 구현 세부사항이 아닌 사용자 행동에 집중합니다. React Testing Library의 철학과 실전 패턴을 소개합니다.",
+      "author": "한테스트",
+      "date": "2024-11-05",
+      "category": "Testing",
+      "tags": [
+        "Testing",
+        "React",
+        "Jest",
+        "Quality Assurance"
+      ],
+      "image": "/placeholder.svg",
+      "readTime": 13,
+      "featured": false,
+      "status": "published"
+    },
+    {
+      "id": "blog-10",
+      "title": "Git 워크플로우: 팀 협업 베스트 프랙티스",
+      "summary": "Git Flow, GitHub Flow, Trunk Based Development. 팀에 맞는 브랜치 전략을 선택하고 적용하는 방법입니다.",
+      "excerpt": "Git Flow, GitHub Flow, Trunk Based Development. 팀에 맞는 브랜치 전략을 선택하고 적용하는 방법입니다.",
+      "content": "효과적인 Git 워크플로우는 팀 생산성을 크게 향상시킵니다. 다양한 전략의 장단점과 실제 적용 사례를 공유합니다.",
+      "author": "서협업",
+      "date": "2024-11-02",
+      "category": "DevOps",
+      "tags": [
+        "Git",
+        "Version Control",
+        "Team Collaboration",
+        "DevOps"
+      ],
+      "image": "/placeholder.svg",
+      "readTime": 8,
+      "featured": false,
+      "status": "published"
+    }
+  ]
+}

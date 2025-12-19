@@ -1,0 +1,126 @@
+{
+  "profileImage": "",
+  "name": "WON KIM",
+  "title": "안녕하세요. 김원 입니다. 만나서 반갑습니다.",
+  "biography": "안녕하세요! 저는 기술과 창의성을 결합하여, 혁신적인 솔루션을 만드는 것을 좋아합니다.\n\n최신 기술 트렌드를 빠르게 습득하려 노력하고, 이를 실제 프로젝트에 적용하여, 비즈니스 가치를 창출하는 것을 목표로 합니다.\n\nAI, 웹 개발, 그리고 사용자 경험 디자인에 깊은 관심을 가지고 있으며, 지속적인 학습과 성장을 추구합니다.",
+  "certifications": [
+    {
+      "name": "ESG 전문가",
+      "issuer": "",
+      "date": "",
+      "image": "",
+      "id": "cert-1"
+    },
+    {
+      "name": "ESG 경영평가사",
+      "issuer": "",
+      "date": "",
+      "image": "",
+      "id": "cert-2"
+    },
+    {
+      "name": "ESG 인증평가사",
+      "issuer": "",
+      "date": "",
+      "image": "",
+      "id": "cert-3"
+    },
+    {
+      "name": "ESG 경영지도자 Lv.Ⅱ",
+      "issuer": "",
+      "date": "",
+      "image": "",
+      "id": "cert-4"
+    },
+    {
+      "name": "정보보안전문가",
+      "issuer": "",
+      "date": "",
+      "image": "",
+      "id": "cert-5"
+    },
+    {
+      "name": "프롬프트엔지니어",
+      "issuer": "",
+      "date": "",
+      "image": "",
+      "id": "cert-6"
+    },
+    {
+      "name": "전자계산기기능사",
+      "issuer": "",
+      "date": "",
+      "image": "",
+      "id": "cert-7"
+    },
+    {
+      "name": "운전면허: 1종보통",
+      "issuer": "",
+      "date": "",
+      "image": "",
+      "id": "cert-8"
+    },
+    {
+      "name": "병역: 육군병장전역",
+      "issuer": "",
+      "date": "",
+      "image": "",
+      "id": "cert-9"
+    },
+    {
+      "name": "그 외 자격: 지게차(2.5t), 멀티콥터 4종",
+      "issuer": "",
+      "date": "",
+      "image": "",
+      "id": "cert-10"
+    }
+  ],
+  "careerTimeline": [
+    {
+      "title": "한국과학기술정보연구원",
+      "position": "교육 수료",
+      "startDate": "",
+      "endDate": "",
+      "description": "기업 ESG 대응전략, K-ESG 가이드라인",
+      "year": "2025",
+      "type": "education",
+      "icon": "GraduationCap",
+      "id": "timeline-1"
+    },
+    {
+      "title": "서울대학교 AI교육과정 2기",
+      "position": "교육 수료",
+      "startDate": "",
+      "endDate": "",
+      "description": "ChatGPT 챗봇, 미드저니, 콘텐츠, 고급 AI활용, VIBE 코딩 Web APP 제작",
+      "year": "2025",
+      "type": "education",
+      "icon": "GraduationCap",
+      "id": "timeline-2"
+    },
+    {
+      "title": "수정중",
+      "position": "수정중",
+      "startDate": "",
+      "endDate": "",
+      "description": "Recognized for developing AI-powered solutions",
+      "year": "2023",
+      "type": "achievement",
+      "icon": "Award",
+      "id": "timeline-3"
+    },
+    {
+      "title": "수정중",
+      "position": "수정중",
+      "startDate": "",
+      "endDate": "",
+      "description": "Leading development teams and mentoring junior developers",
+      "year": "2024",
+      "type": "career",
+      "icon": "Users",
+      "id": "timeline-4"
+    }
+  ],
+  "updatedAt": "2025-12-18T12:00:00.000Z",
+  "updatedBy": "system-restore"
+}

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSS Feed 테스트</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #1a1a1a;
+      color: #fff;
+    }
+    h1 { text-align: center; margin-bottom: 30px; }
+    .feeds-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 20px;
+    }
+    .feed-card {
+      background: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 20px;
+      overflow: hidden;
+    }
+    .feed-card h3 {
+      margin-top: 0;
+      color: #4a9eff;
+    }
+    .status {
+      font-weight: bold;
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin: 10px 0;
+      font-size: 12px;
+    }
+    .status.loading {
+      background: #334455;
+      color: #88ccff;
+    }
+    .status.success {
+      background: #223322;
+      color: #88ff88;
+    }
+    .status.error {
+      background: #553322;
+      color: #ff8888;
+    }
+    .items-list {
+      margin-top: 15px;
+      font-size: 12px;
+    }
+    .item {
+      background: #1a1a1a;
+      padding: 10px;
+      margin: 8px 0;
+      border-left: 3px solid #4a9eff;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .debug-info {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #444;
+      font-size: 11px;
+      color: #aaa;
+      font-family: monospace;
+    }
+    .summary {
+      background: #2a3a2a;
+      border: 1px solid #4a4;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .summary h2 {
+      margin-top: 0;
+      color: #8f8;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔍 RSS Feed 동작 테스트</h1>
+  
+  <div class="summary">
+    <h2>요약</h2>
+    <p>총 아이템: <strong id="totalItems">0</strong>/8</p>
+    <p>성공한 피드: <strong id="successCount">0</strong>/4</p>
+    <p>실패한 피드: <strong id="failCount">0</strong>/4</p>
+  </div>
+
+  <div class="feeds-container" id="feedsContainer"></div>
+
+  <script>
+    const RSS_CORS_PROXY = 'https://api.rss2json.com/v1/api.json?rss_url=';
+    
+    const feeds = [
+      { 
+        name: 'Naver IT/Science', 
+        url: 'https://rss.naver.com/rss/section/105.xml',
+        key: 'naver-it'
+      },
+      { 
+        name: 'Daum IT', 
+        url: 'https://rss.daumkakao.com/xml/news/it.xml',
+        key: 'daum-it'
+      },
+      { 
+        name: 'Google News AI', 
+        url: 'https://news.google.com/rss/search?q=AI%20OR%20%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5&hl=ko&gl=KR&ceid=KR:ko',
+        key: 'google-news'
+      },
+      { 
+        name: 'Naver Software', 
+        url: 'https://rss.naver.com/rss/section/63.xml',
+        key: 'naver-sw'
+      },
+    ];
+
+    async function testFeed(feed) {
+      const cardEl = document.getElementById(feed.key);
+      const statusEl = cardEl.querySelector('.status');
+      const itemsEl = cardEl.querySelector('.items-list');
+      const debugEl = cardEl.querySelector('.debug-info');
+
+      statusEl.textContent = '⏳ 로딩 중...';
+      statusEl.className = 'status loading';
+
+      try {
+        const proxyUrl = `${RSS_CORS_PROXY}${encodeURIComponent(feed.url)}`;
+        console.log(`[${feed.name}] 요청: ${proxyUrl.substring(0, 80)}...`);
+
+        const response = await fetch(proxyUrl);
+        console.log(`[${feed.name}] 응답: ${response.status}`);
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        const items = data.items || [];
+        
+        console.log(`[${feed.name}] 수신 아이템: ${items.length}개`);
+
+        if (items.length === 0) {
+          throw new Error('아이템 없음');
+        }
+
+        statusEl.innerHTML = `✅ 성공 (${items.length}개 아이템)`;
+        statusEl.className = 'status success';
+
+        itemsEl.innerHTML = items.slice(0, 3).map((item, idx) => 
+          `<div class="item">${idx + 1}. ${item.title || '제목 없음'}</div>`
+        ).join('');
+
+        debugEl.innerHTML = `
+          <div>상태: 성공</div>
+          <div>응답 시간: ${new Date().toLocaleTimeString('ko-KR')}</div>
+          <div>아이템 수: ${items.length}</div>
+        `;
+
+        return true;
+      } catch (error) {
+        console.error(`[${feed.name}] 에러:`, error);
+        statusEl.innerHTML = `❌ 실패: ${error.message}`;
+        statusEl.className = 'status error';
+        itemsEl.innerHTML = '<div style="color: #ff6666;">아이템 로드 실패</div>';
+        debugEl.innerHTML = `
+          <div>상태: 실패</div>
+          <div>에러: ${error.message}</div>
+          <div>시도 시간: ${new Date().toLocaleTimeString('ko-KR')}</div>
+        `;
+        return false;
+      }
+    }
+
+    // 초기 UI 생성
+    function initializeUI() {
+      const container = document.getElementById('feedsContainer');
+      container.innerHTML = feeds.map(feed => `
+        <div class="feed-card" id="${feed.key}">
+          <h3>${feed.name}</h3>
+          <div class="status loading">⏳ 대기 중...</div>
+          <div class="items-list"></div>
+          <div class="debug-info">준비 중...</div>
+        </div>
+      `).join('');
+    }
+
+    // 모든 피드 테스트
+    async function testAllFeeds() {
+      console.log('🚀 RSS 피드 테스트 시작');
+      initializeUI();
+
+      let successCount = 0;
+      let totalItems = 0;
+
+      for (const feed of feeds) {
+        const success = await testFeed(feed);
+        if (success) {
+          successCount++;
+          const cardEl = document.getElementById(feed.key);
+          const statusText = cardEl.querySelector('.status').textContent;
+          const itemMatch = statusText.match(/(\d+)개/);
+          if (itemMatch) {
+            totalItems += parseInt(itemMatch[1]);
+          }
+        }
+        // 요청 사이에 약간의 지연
+        await new Promise(r => setTimeout(r, 500));
+      }
+
+      // 요약 업데이트
+      document.getElementById('totalItems').textContent = totalItems;
+      document.getElementById('successCount').textContent = successCount;
+      document.getElementById('failCount').textContent = feeds.length - successCount;
+
+      console.log(`📊 최종 결과: ${successCount}/${feeds.length} 성공, 총 ${totalItems}개 아이템`);
+    }
+
+    // 페이지 로드 시 테스트 시작
+    window.addEventListener('load', testAllFeeds);
+  </script>
+</body>
+</html>

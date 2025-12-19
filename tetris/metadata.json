@@ -1,0 +1,5 @@
+{
+  "name": "Tetris",
+  "description": "A classic Tetris game built with HTML, CSS (Tailwind), and JavaScript. Use your arrow keys to move and rotate the falling blocks to clear lines and score points.",
+  "requestFramePermissions": []
+}

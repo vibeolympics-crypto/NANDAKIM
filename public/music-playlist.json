@@ -1,0 +1,327 @@
+{
+  "ok": true,
+  "data": {
+    "config": {
+      "enabled": true,
+      "autoplay": false,
+      "defaultVolume": 30,
+      "playbackMode": "random",
+      "position": "bottom-left",
+      "maxTracks": 50,
+      "visibility": {
+        "showOnWeb": true,
+        "showOnMobile": true
+      },
+      "attribution": {
+        "text": "Music created by the website operator using AI",
+        "showSunoAI": true
+      }
+    },
+    "tracks": [
+      {
+        "id": "1",
+        "title": "Track 1",
+        "artist": "WON",
+        "filename": "1.mp3",
+        "url": "/music/1.mp3",
+        "duration": 180
+      },
+      {
+        "id": "2",
+        "title": "Track 2",
+        "artist": "WON",
+        "filename": "2.mp3",
+        "url": "/music/2.mp3",
+        "duration": 180
+      },
+      {
+        "id": "3",
+        "title": "Track 3",
+        "artist": "WON",
+        "filename": "3.mp3",
+        "url": "/music/3.mp3",
+        "duration": 180
+      },
+      {
+        "id": "4",
+        "title": "Track 4",
+        "artist": "WON",
+        "filename": "4.mp3",
+        "url": "/music/4.mp3",
+        "duration": 180
+      },
+      {
+        "id": "5",
+        "title": "Track 5",
+        "artist": "WON",
+        "filename": "5.mp3",
+        "url": "/music/5.mp3",
+        "duration": 180
+      },
+      {
+        "id": "6",
+        "title": "Track 6",
+        "artist": "WON",
+        "filename": "6.mp3",
+        "url": "/music/6.mp3",
+        "duration": 180
+      },
+      {
+        "id": "7",
+        "title": "Track 7",
+        "artist": "WON",
+        "filename": "7.mp3",
+        "url": "/music/7.mp3",
+        "duration": 180
+      },
+      {
+        "id": "8",
+        "title": "Track 8",
+        "artist": "WON",
+        "filename": "8.mp3",
+        "url": "/music/8.mp3",
+        "duration": 180
+      },
+      {
+        "id": "9",
+        "title": "Track 9",
+        "artist": "WON",
+        "filename": "9.mp3",
+        "url": "/music/9.mp3",
+        "duration": 180
+      },
+      {
+        "id": "10",
+        "title": "Track 10",
+        "artist": "WON",
+        "filename": "10.mp3",
+        "url": "/music/10.mp3",
+        "duration": 180
+      },
+      {
+        "id": "11",
+        "title": "Track 11",
+        "artist": "WON",
+        "filename": "11.mp3",
+        "url": "/music/11.mp3",
+        "duration": 180
+      },
+      {
+        "id": "12",
+        "title": "Track 12",
+        "artist": "WON",
+        "filename": "12.mp3",
+        "url": "/music/12.mp3",
+        "duration": 180
+      },
+      {
+        "id": "13",
+        "title": "Track 13",
+        "artist": "WON",
+        "filename": "13.mp3",
+        "url": "/music/13.mp3",
+        "duration": 180
+      },
+      {
+        "id": "14",
+        "title": "Track 14",
+        "artist": "WON",
+        "filename": "14.mp3",
+        "url": "/music/14.mp3",
+        "duration": 180
+      },
+      {
+        "id": "15",
+        "title": "Track 15",
+        "artist": "WON",
+        "filename": "15.mp3",
+        "url": "/music/15.mp3",
+        "duration": 180
+      },
+      {
+        "id": "16",
+        "title": "Track 16",
+        "artist": "WON",
+        "filename": "16.mp3",
+        "url": "/music/16.mp3",
+        "duration": 180
+      },
+      {
+        "id": "17",
+        "title": "Track 17",
+        "artist": "WON",
+        "filename": "17.mp3",
+        "url": "/music/17.mp3",
+        "duration": 180
+      },
+      {
+        "id": "ably",
+        "title": "ABLY",
+        "artist": "WON",
+        "filename": "ABLY.mp3",
+        "url": "/music/ABLY.mp3",
+        "duration": 180
+      },
+      {
+        "id": "bright-echo",
+        "title": "Bright Echo",
+        "artist": "WON",
+        "filename": "Bright Echo.mp3",
+        "url": "/music/Bright Echo.mp3",
+        "duration": 180
+      },
+      {
+        "id": "by-your-side",
+        "title": "By Your Side",
+        "artist": "WON",
+        "filename": "By Your Side.mp3",
+        "url": "/music/By Your Side.mp3",
+        "duration": 180
+      },
+      {
+        "id": "dark-feeling",
+        "title": "Dark Feeling",
+        "artist": "WON",
+        "filename": "dark feeling.mp3",
+        "url": "/music/dark feeling.mp3",
+        "duration": 180
+      },
+      {
+        "id": "digital-sparkle",
+        "title": "Digital Sparkle",
+        "artist": "WON",
+        "filename": "Digital Sparkle.mp3",
+        "url": "/music/Digital Sparkle.mp3",
+        "duration": 180
+      },
+      {
+        "id": "echo-vibe",
+        "title": "Echo Vibe",
+        "artist": "WON",
+        "filename": "Echo Vibe.mp3",
+        "url": "/music/Echo Vibe.mp3",
+        "duration": 180
+      },
+      {
+        "id": "echoes-in-the-dark",
+        "title": "Echoes in the Dark",
+        "artist": "WON",
+        "filename": "Echoes in the Dark.mp3",
+        "url": "/music/Echoes in the Dark.mp3",
+        "duration": 180
+      },
+      {
+        "id": "feel-the-rush",
+        "title": "Feel the Rush",
+        "artist": "WON",
+        "filename": "Feel the Rush.mp3",
+        "url": "/music/Feel the Rush.mp3",
+        "duration": 180
+      },
+      {
+        "id": "fuego-en-la-pista",
+        "title": "Fuego en la Pista",
+        "artist": "WON",
+        "filename": "Fuego en la Pista.mp3",
+        "url": "/music/Fuego en la Pista.mp3",
+        "duration": 180
+      },
+      {
+        "id": "funky-vibes",
+        "title": "Funky Vibes All Night",
+        "artist": "WON",
+        "filename": "Funky Vibes All Night.mp3",
+        "url": "/music/Funky Vibes All Night.mp3",
+        "duration": 180
+      },
+      {
+        "id": "girl",
+        "title": "Girl",
+        "artist": "WON",
+        "filename": "girl.mp3",
+        "url": "/music/girl.mp3",
+        "duration": 180
+      },
+      {
+        "id": "club-fever",
+        "title": "Global Girl Group – Club Fever",
+        "artist": "WON",
+        "filename": "Global Girl Group – Club Fever.mp3",
+        "url": "/music/Global Girl Group – Club Fever.mp3",
+        "duration": 180
+      },
+      {
+        "id": "global-pulse",
+        "title": "Global Pulse",
+        "artist": "WON",
+        "filename": "Global Pulse.mp3",
+        "url": "/music/Global Pulse.mp3",
+        "duration": 180
+      },
+      {
+        "id": "impact-pulse",
+        "title": "Impact Pulse",
+        "artist": "WON",
+        "filename": "Impact Pulse.mp3",
+        "url": "/music/Impact Pulse.mp3",
+        "duration": 180
+      },
+      {
+        "id": "neon-fever",
+        "title": "Neon Fever",
+        "artist": "WON",
+        "filename": "Neon Fever.mp3",
+        "url": "/music/Neon Fever.mp3",
+        "duration": 180
+      },
+      {
+        "id": "old-feeling",
+        "title": "Old Feeling",
+        "artist": "WON",
+        "filename": "old feeling.mp3",
+        "url": "/music/old feeling.mp3",
+        "duration": 180
+      },
+      {
+        "id": "shine-all-night",
+        "title": "Shine All Night",
+        "artist": "WON",
+        "filename": "Shine All Night.mp3",
+        "url": "/music/Shine All Night.mp3",
+        "duration": 180
+      },
+      {
+        "id": "shine-tonight",
+        "title": "Shine Tonight",
+        "artist": "WON",
+        "filename": "Shine Tonight.mp3",
+        "url": "/music/Shine Tonight.mp3",
+        "duration": 180
+      },
+      {
+        "id": "summer-forever",
+        "title": "Summer Forever",
+        "artist": "WON",
+        "filename": "Summer Forever.mp3",
+        "url": "/music/Summer Forever.mp3",
+        "duration": 180
+      },
+      {
+        "id": "supernova-love",
+        "title": "Supernova Love",
+        "artist": "WON",
+        "filename": "Supernova Love.mp3",
+        "url": "/music/Supernova Love.mp3",
+        "duration": 180
+      },
+      {
+        "id": "young-pulse",
+        "title": "Young Pulse",
+        "artist": "WON",
+        "filename": "Young Pulse.mp3",
+        "url": "/music/Young Pulse.mp3",
+        "duration": 180
+      }
+    ]
+  }
+}

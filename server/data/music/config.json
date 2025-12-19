@@ -1,0 +1,11 @@
+{
+  "enabled": true,
+  "autoplay": false,
+  "defaultVolume": 70,
+  "position": "bottom-right",
+  "playbackMode": "random",
+  "visibility": {
+    "showOnWeb": true,
+    "showOnMobile": true
+  }
+}

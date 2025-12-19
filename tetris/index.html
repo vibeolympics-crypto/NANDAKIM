@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        @media (max-width: 768px) {
+            #game-area {
+                flex-direction: column;
+                gap: 0.5rem;
+                height: 100vh;
+                min-height: 100vh;
+                padding: 0.5rem 0.25rem;
+            }
+            #game-board-container {
+                flex: none;
+                width: 100%;
+                min-height: 300px;
+                max-width: 100vw;
+                margin-bottom: 0.5rem;
+            }
+            #side-panel {
+                flex: none;
+                width: 100%;
+                gap: 0.25rem;
+                margin-bottom: 0.5rem;
+            }
+            #mobile-controls {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.25rem;
+                padding-bottom: 0.5rem;
+            }
+            #mobile-controls button {
+                font-size: 2rem;
+                padding: 0.5rem 0;
+            }
+            #rotate-button-mobile, #hard-drop-button-mobile {
+                font-size: 2.2rem;
+                padding: 0.75rem 0;
+            }
+        }
+    </style>
+<link rel="stylesheet" href="./index.css">
+</head>
+<body class="bg-sky-100 text-slate-700 overflow-hidden">
+
+    <div class="container mx-auto p-1 flex flex-col items-center h-screen max-h-screen">
+        
+        <header class="w-full max-w-4xl mb-1 self-start">
+            <h1 class="text-base font-bold text-sky-800 tracking-wider">TETRIS</h1>
+        </header>
+
+        <main id="game-area" class="w-full max-w-4xl flex-grow flex flex-row items-stretch justify-center gap-1">
+            <!-- Game Board (A) -->
+            <div id="game-board-container" class="relative flex-[7] min-w-0">
+                <canvas id="game-board" class="bg-slate-200 rounded-lg shadow-inner"></canvas>
+                 <div id="game-overlay" class="absolute inset-0 bg-black bg-opacity-50 text-white text-4xl font-bold flex items-center justify-center rounded-lg backdrop-blur-sm">
+                    <button id="start-button" class="px-8 py-4 bg-sky-500 hover:bg-sky-600 rounded-lg text-2xl">Start Game</button>
+                </div>
+            </div>
+
+            <!-- Side Panel (B) -->
+            <div id="side-panel" class="flex flex-col space-y-1 flex-[3] min-w-0">
+                <!-- High Score Panel -->
+                <div class="bg-white/70 rounded-lg shadow-lg p-1 backdrop-blur-sm text-center">
+                    <h2 class="font-bold text-sm text-sky-800">HIGH SCORE</h2>
+                    <p id="high-score" class="text-lg font-mono">0</p>
+                </div>
+                <!-- Next Piece Panel -->
+                <div id="next-piece-container" class="bg-white/70 rounded-lg shadow-lg p-1 backdrop-blur-sm text-center">
+                    <h2 class="font-bold text-sm text-sky-800">NEXT</h2>
+                    <canvas id="next-piece" class="mx-auto mt-1"></canvas>
+                </div>
+                 <!-- Stats Panel -->
+                <div class="bg-white/70 rounded-lg shadow-lg p-1 backdrop-blur-sm space-y-1">
+                    <div class="text-center">
+                        <h2 class="font-bold text-xs text-sky-800">SCORE</h2>
+                        <p id="score" class="text-base font-mono">0</p>
+                    </div>
+                    <div class="text-center">
+                        <h2 class="font-bold text-xs text-sky-800">ROWS</h2>
+                        <p id="rows" class="text-base font-mono">0</p>
+                    </div>
+                    <div class="text-center">
+                        <h2 class="font-bold text-xs text-sky-800">LEVEL</h2>
+                        <p id="level" class="text-base font-mono">0</p>
+                    </div>
+                </div>
+                <!-- Action Buttons -->
+                 <div class="flex items-center justify-center space-x-1">
+                     <button id="pause-button" aria-label="Pause Game" class="w-10 h-10 bg-white/70 rounded-full shadow-lg flex items-center justify-center text-lg text-sky-600 hover:bg-sky-200 disabled:opacity-50" disabled>❚❚</button>
+                     <button id="restart-button" aria-label="Restart Game" class="w-10 h-10 bg-white/70 rounded-full shadow-lg flex items-center justify-center text-xl text-sky-600 hover:bg-sky-200 disabled:opacity-50" disabled>⟳</button>
+                 </div>
+                 <!-- Mobile Controls -->
+                <div id="mobile-controls" class="w-full flex-grow grid grid-cols-3 gap-1 pt-1">
+                    <!-- Rotate Button -->
+                    <button id="rotate-button-mobile" aria-label="Rotate" class="col-span-3 bg-sky-400 hover:bg-sky-500 text-white rounded-lg shadow-lg text-4xl flex justify-center items-center py-3">⟳</button>
+                    
+                    <!-- Direction Buttons -->
+                    <button id="left-button-mobile" aria-label="Move Left" class="bg-orange-400 hover:bg-orange-500 text-white rounded-lg shadow-lg text-4xl flex justify-center items-center aspect-square">←</button>
+                    <button id="down-button-mobile" aria-label="Move Down" class="bg-orange-400 hover:bg-orange-500 text-white rounded-lg shadow-lg text-4xl flex justify-center items-center aspect-square">↓</button>
+                    <button id="right-button-mobile" aria-label="Move Right" class="bg-orange-400 hover:bg-orange-500 text-white rounded-lg shadow-lg text-4xl flex justify-center items-center aspect-square">→</button>
+                    
+                    <!-- Hard Drop Button -->
+                    <button id="hard-drop-button-mobile" aria-label="Hard Drop" class="col-span-3 bg-purple-500 hover:bg-purple-600 text-white rounded-lg shadow-lg text-4xl flex justify-center items-center py-3">⤓</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="./index.tsx"></script>
+</body>
+</html>

@@ -1,0 +1,417 @@
+/* Music Player Styles */
+.music-player-container {
+  z-index: 50 !important;
+}
+
+/* Ensure proper stacking context */
+html, body {
+  position: relative;
+}
+
+/* Ensure player is above page content but below modals */
+header {
+  z-index: 40;
+}
+
+main {
+  z-index: 10;
+}
+
+footer {
+  position: relative;
+  z-index: 10;
+}
+
+/* Modal overlays should be above player */
+[role='dialog'],
+.modal-overlay {
+  z-index: 60;
+}
+
+/* Ensure smooth transitions */
+.music-player-container {
+  transition: all 300ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Prevent layout shift when player loads */
+/* Note: contain 속성 제거 - 재생목록/볼륨 패널이 부모 경계를 벗어나야 함 */
+.music-player-container {
+  /* contain: layout style paint; */
+  overflow: visible;
+}
+
+/* Accessibility - ensure focus is visible */
+.music-player-container:focus-within {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+}
+
+/* Custom Range Slider Styling */
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  cursor: pointer;
+  margin-top: -4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  background: hsl(var(--muted));
+  border-radius: 2px;
+}
+
+/* Firefox range slider styling */
+input[type=range]::-moz-range-thumb {
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input[type=range]::-moz-range-track {
+  background: transparent;
+  border: none;
+}
+
+input[type=range]::-moz-range-progress {
+  background: hsl(var(--primary));
+  height: 4px;
+  border-radius: 2px;
+}
+
+/* Vertical volume slider specific styling */
+.volume-slider-vertical {
+  writing-mode: vertical-lr;
+  direction: rtl;
+}
+
+/* Minimalist volume slider styling */
+.volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 4px;
+  writing-mode: vertical-lr;
+  -webkit-writing-mode: vertical-lr;
+  direction: rtl;
+  -webkit-direction: rtl;
+  background: linear-gradient(to bottom, hsl(var(--primary) / 0.5), hsl(var(--primary) / 0.3));
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  cursor: pointer;
+  margin-left: -4px;
+  box-shadow: 0 0 6px rgba(var(--primary-rgb), 0.5);
+  transition: all 0.2s ease;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+  width: 14px;
+  height: 14px;
+  margin-left: -5px;
+  box-shadow: 0 0 10px rgba(var(--primary-rgb), 0.7);
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 6px rgba(var(--primary-rgb), 0.5);
+  transition: all 0.2s ease;
+}
+
+.volume-slider::-moz-range-thumb:hover {
+  width: 14px;
+  height: 14px;
+  box-shadow: 0 0 10px rgba(var(--primary-rgb), 0.7);
+}
+
+/* Mobile responsive - stack vertically on small screens */
+@media (max-width: 640px) {
+  .music-player-mini {
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    max-width: calc(100vw - 2rem);
+    flex-wrap: wrap;
+    padding: 0.75rem;
+    gap: 0.5rem;
+  }
+}
+
+/* Print styles - hide player when printing */
+@media print {
+
+  .music-player-mini,
+  .music-player-container {
+    display: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .music-player-container {
+    border-width: 2px;
+    border-style: solid;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .music-player-container {
+    transition: none;
+  }
+
+  .music-player-mini {
+    animation: none;
+  }
+
+  .animate-music-bar-1,
+  .animate-music-bar-2,
+  .animate-music-bar-3,
+  .animate-music-bar-4 {
+    animation: none;
+    height: 8px;
+  }
+
+  .music-player-glow::before,
+  .music-player-glow::after {
+    animation: none;
+  }
+}
+
+/* Animation for music bars */
+@keyframes music-bar {
+
+  0%,
+  100% {
+    height: 4px;
+  }
+
+  50% {
+    height: 16px;
+  }
+}
+
+.animate-music-bar-1 {
+  animation: music-bar 1s ease-in-out infinite;
+}
+
+.animate-music-bar-2 {
+  animation: music-bar 1.2s ease-in-out infinite 0.1s;
+}
+
+.animate-music-bar-3 {
+  animation: music-bar 0.8s ease-in-out infinite 0.2s;
+}
+
+.animate-music-bar-4 {
+  animation: music-bar 0.9s ease-in-out infinite 0.3s;
+}
+
+/* Aurora-style rainbow glow for the music genres */
+.music-player-glow {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  box-shadow:
+    0 0 35px rgba(0, 0, 0, 0.25),
+    0 0 65px rgba(99, 102, 241, 0.25);
+}
+
+.music-player-glow::before,
+.music-player-glow::after {
+  content: '';
+  position: absolute;
+  inset: -25%;
+  border-radius: inherit;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.music-player-glow::before {
+  background: conic-gradient(
+    from 45deg,
+    rgba(255, 99, 71, 0.45),
+    rgba(255, 199, 95, 0.4),
+    rgba(0, 212, 255, 0.45),
+    rgba(147, 112, 219, 0.45),
+    rgba(255, 99, 71, 0.45)
+  );
+  filter: blur(55px);
+  opacity: 0.45;
+  background-size: 200% 200%;
+  animation: aurora-shift 18s ease-in-out infinite;
+}
+
+.music-player-glow::after {
+  inset: -10%;
+  background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.2), transparent 60%);
+  filter: blur(35px);
+  opacity: 0.35;
+  animation: shimmer-pulse 12s ease-in-out infinite;
+}
+
+.music-player-glow:hover::before {
+  opacity: 0.6;
+}
+
+.music-player-glow:hover::after {
+  opacity: 0.45;
+}
+
+@keyframes aurora-shift {
+  0% {
+    background-position: 0% 50%;
+    transform: rotate(0deg) scale(1);
+  }
+
+  25% {
+    background-position: 50% 100%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+    transform: rotate(180deg) scale(1.02);
+  }
+
+  75% {
+    background-position: 50% 0%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes shimmer-pulse {
+  0% {
+    opacity: 0.25;
+  }
+
+  50% {
+    opacity: 0.55;
+  }
+
+  100% {
+    opacity: 0.25;
+  }
+}
+
+/* ============================================
+ * Playlist & Volume Panel Popup Styles
+ * 재생목록/볼륨 패널이 플레이어 경계 밖에 표시되도록 보장
+ * Added: 2025-12-15
+ * ============================================ */
+
+/* 플레이어 컨테이너 - overflow 허용 */
+.music-player-container,
+.music-player-glow {
+  overflow: visible !important;
+}
+
+/* 재생목록 패널 - 헤더(z-40)보다 높고 모달(z-60)보다 낮게 */
+.music-player-container .group\/playlist > div[class*="fixed"],
+.music-player-container .group\/volume > div[class*="fixed"] {
+  z-index: 55 !important;
+  pointer-events: auto !important;
+}
+
+/* 패널 공통 스타일 강화 */
+div[class*="fixed"][class*="bg-gradient-to-b"][class*="backdrop-blur"] {
+  z-index: 55 !important;
+  isolation: isolate;
+}
+
+/* 모바일에서 패널 z-index 보장 */
+@media (max-width: 768px) {
+  .music-player-container .group\/playlist > div[class*="fixed"],
+  .music-player-container .group\/volume > div[class*="fixed"] {
+    z-index: 55 !important;
+  }
+}
+
+/* 패널 애니메이션 개선 */
+.music-player-container [class*="animate-in"][class*="fade-in"] {
+  animation-duration: 200ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 패널 외부 클릭 영역 (선택사항 - 필요시 JavaScript로 구현) */
+.panel-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 54;
+  background: transparent;
+}
+
+/* 터치 디바이스에서 패널 터치 영역 확보 */
+@media (hover: none) and (pointer: coarse) {
+  .music-player-container .group\/playlist > div[class*="fixed"],
+  .music-player-container .group\/volume > div[class*="fixed"] {
+    /* 터치 타겟 크기 보장 */
+    min-width: 52px;
+  }
+  
+  /* 볼륨 슬라이더 터치 영역 확대 */
+  .music-player-container .volume-slider {
+    min-width: 44px;
+    min-height: 120px;
+  }
+}
+
+/* 다크/라이트 테마 대응 */
+:root .music-player-container [class*="fixed"][class*="bg-gradient-to-b"] {
+  background: linear-gradient(
+    to bottom,
+    hsl(var(--background) / 0.98),
+    hsl(var(--background) / 0.95)
+  );
+}
+
+.light .music-player-container [class*="fixed"][class*="bg-gradient-to-b"] {
+  background: linear-gradient(
+    to bottom,
+    hsl(var(--background) / 0.98),
+    hsl(var(--background) / 0.95)
+  );
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Reduced motion 지원 - 패널용 */
+@media (prefers-reduced-motion: reduce) {
+  .music-player-container [class*="animate-in"] {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}

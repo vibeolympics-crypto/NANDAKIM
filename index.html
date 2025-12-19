@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
+    />
+
+    <!-- Primary Meta Tags -->
+    <title>Portfolio | Discover, Create & Connect</title>
+    <meta name="title" content="Portfolio | Discover, Create & Connect" />
+    <meta
+      name="description"
+      content="Your Gateway to Nigerian Culture & Commerce - Discover, Create & Connect with All Things Nigerian"
+    />
+    <meta
+      name="keywords"
+      content="portfolio, Nigerian culture, commerce, blog, projects, creative work"
+    />
+    <meta name="author" content="Lovable" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://yoursite.com/" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Portfolio" />
+
+    <!-- Cache Control - Disable caching in development -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/placeholder.svg" />
+
+    <!-- Preconnect hints for external resources (Requirements: 4.6) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+
+    <!-- Google Fonts with display=swap for better performance (Requirements: 4.6) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Preconnect to potential external resources (Requirements: 4.6) -->
+    <link rel="preconnect" href="https://maps.googleapis.com" />
+    <link rel="dns-prefetch" href="https://maps.googleapis.com" />
+    <link rel="preconnect" href="https://www.youtube.com" />
+    <link rel="dns-prefetch" href="https://www.youtube.com" />
+
+    <!-- Prefetch DNS for CDN and analytics -->
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://unpkg.com" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://yoursite.com/" />
+    <meta property="og:title" content="Portfolio | Discover, Create & Connect" />
+    <meta
+      property="og:description"
+      content="Your Gateway to Nigerian Culture & Commerce - Discover, Create & Connect with All Things Nigerian"
+    />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta property="og:site_name" content="Portfolio" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://yoursite.com/" />
+    <meta name="twitter:title" content="Portfolio | Discover, Create & Connect" />
+    <meta
+      name="twitter:description"
+      content="Your Gateway to Nigerian Culture & Commerce - Discover, Create & Connect with All Things Nigerian"
+    />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta name="twitter:site" content="@Lovable" />
+    <meta name="twitter:creator" content="@Lovable" />
+  </head>
+
+  <body>
+    <!-- Theme initialization script to prevent flash -->
+    <script>
+      (function () {
+        try {
+          const theme = localStorage.getItem('theme') || 'dark';
+          const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light';
+          const resolvedTheme = theme === 'system' ? systemTheme : theme;
+
+          if (resolvedTheme === 'light') {
+            document.documentElement.classList.add('light');
+          } else {
+            document.documentElement.classList.remove('light');
+          }
+        } catch (e) {
+          console.error('Theme initialization error:', e);
+        }
+      })();
+    </script>
+
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Portfolio",
+        "description": "Your Gateway to Nigerian Culture & Commerce - Discover, Create & Connect with All Things Nigerian",
+        "url": "https://yoursite.com/",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://yoursite.com/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+  </body>
+</html>

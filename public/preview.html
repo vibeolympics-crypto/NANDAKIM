@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Live Preview</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+          sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: #fff;
+        transition:
+          background-color 0.3s,
+          color 0.3s;
+      }
+
+      body.dark {
+        background: #1a1a1a;
+        color: #e5e5e5;
+      }
+
+      #preview-root {
+        min-height: 100vh;
+        padding: 2rem;
+      }
+
+      .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        font-size: 1.2rem;
+        color: #666;
+      }
+
+      body.dark .loading {
+        color: #999;
+      }
+
+      /* Preview content styles */
+      .preview-section {
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        border: 1px solid #e5e5e5;
+        border-radius: 8px;
+      }
+
+      body.dark .preview-section {
+        border-color: #333;
+      }
+
+      .preview-section h2 {
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .preview-section p {
+        margin-bottom: 0.5rem;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+      }
+
+      a {
+        color: #0066cc;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      body.dark a {
+        color: #4d9fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="preview-root">
+      <div class="loading">Waiting for content...</div>
+    </div>
+
+    <script>
+      // Listen for content updates from parent window
+      window.addEventListener('message', function (event) {
+        if (event.data.type === 'CONTENT_UPDATE') {
+          const { content, theme } = event.data;
+
+          // Apply theme
+          if (theme === 'dark') {
+            document.body.classList.add('dark');
+          } else {
+            document.body.classList.remove('dark');
+          }
+
+          // Render content
+          renderContent(content);
+
+          // Notify parent that preview is ready (restrict to same origin for security)
+          const targetOrigin = window.location.origin;
+          window.parent.postMessage({ type: 'PREVIEW_READY' }, targetOrigin);
+        }
+      });
+
+      function renderContent(content) {
+        const root = document.getElementById('preview-root');
+
+        if (!content) {
+          root.innerHTML = '<div class="loading">No content to preview</div>';
+          return;
+        }
+
+        // Basic content rendering
+        let html = '';
+
+        // Hero Section
+        if (content.hero) {
+          html += `
+          <div class="preview-section">
+            <h2>${escapeHtml(content.hero.title || 'Hero Title')}</h2>
+            <p>${escapeHtml(content.hero.subtitle || 'Hero subtitle')}</p>
+            ${content.hero.backgroundImage ? `<img src="${escapeHtml(content.hero.backgroundImage)}" alt="Hero background" />` : ''}
+          </div>
+        `;
+        }
+
+        // About Section
+        if (content.about) {
+          html += `
+          <div class="preview-section">
+            <h2>About</h2>
+            ${content.about.profileImage ? `<img src="${escapeHtml(content.about.profileImage)}" alt="Profile" style="max-width: 200px;" />` : ''}
+            <p>${escapeHtml(content.about.biography || 'Biography text')}</p>
+          </div>
+        `;
+        }
+
+        // Projects Section
+        if (content.projects && Array.isArray(content.projects)) {
+          html += '<div class="preview-section"><h2>Projects</h2>';
+          content.projects.forEach((project) => {
+            html += `
+            <div style="margin-bottom: 1rem;">
+              <h3>${escapeHtml(project.title || 'Project Title')}</h3>
+              <p>${escapeHtml(project.description || 'Project description')}</p>
+            </div>
+          `;
+          });
+          html += '</div>';
+        }
+
+        // Blog Section
+        if (content.blog && Array.isArray(content.blog)) {
+          html += '<div class="preview-section"><h2>Blog</h2>';
+          content.blog.forEach((post) => {
+            html += `
+            <div style="margin-bottom: 1rem;">
+              <h3>${escapeHtml(post.title || 'Blog Post Title')}</h3>
+              <p>${escapeHtml(post.summary || 'Blog post summary')}</p>
+            </div>
+          `;
+          });
+          html += '</div>';
+        }
+
+        // Contact Section
+        if (content.contact) {
+          html += `
+          <div class="preview-section">
+            <h2>Contact</h2>
+            <p>Email: ${escapeHtml(content.contact.email || 'email@example.com')}</p>
+            ${content.contact.phone ? `<p>Phone: ${escapeHtml(content.contact.phone)}</p>` : ''}
+            ${content.contact.address ? `<p>Address: ${escapeHtml(content.contact.address)}</p>` : ''}
+          </div>
+        `;
+        }
+
+        // Footer Section
+        if (content.footer) {
+          html += `
+          <div class="preview-section">
+            <h2>Footer</h2>
+            <p>${escapeHtml(content.footer.companyInfo || 'Company information')}</p>
+            <p>${escapeHtml(content.footer.copyright || '© 2024 All rights reserved')}</p>
+          </div>
+        `;
+        }
+
+        // If no specific sections, show raw content
+        if (!html) {
+          html = `
+          <div class="preview-section">
+            <h2>Preview Content</h2>
+            <pre>${escapeHtml(JSON.stringify(content, null, 2))}</pre>
+          </div>
+        `;
+        }
+
+        root.innerHTML = html;
+      }
+
+      function escapeHtml(text) {
+        if (typeof text !== 'string') return text;
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      // Notify parent that iframe is ready (restrict to same origin for security)
+      const targetOrigin = window.location.origin;
+      window.parent.postMessage({ type: 'PREVIEW_READY' }, targetOrigin);
+    </script>
+  </body>
+</html>

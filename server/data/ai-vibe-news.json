@@ -1,0 +1,48 @@
+{
+  "news": [
+    {
+      "id": "1",
+      "title": "AI Breakthroughs in Machine Learning",
+      "summary": "Latest developments in AI technology are transforming the industry with new capabilities.",
+      "description": "Recent advances in neural networks and deep learning are enabling more accurate predictions and faster processing.",
+      "source": "AI Research",
+      "date": "2024-12-02",
+      "category": "AI",
+      "image": "https://via.placeholder.com/400x300?text=AI+Breakthroughs",
+      "url": "#"
+    },
+    {
+      "id": "2",
+      "title": "VIBE Coding: The Future of Visual Programming",
+      "summary": "Visual programming environments combined with AI are revolutionizing development productivity.",
+      "description": "VIBE-based node programming is simplifying the construction of complex AI models and applications.",
+      "source": "Development Trends",
+      "date": "2024-12-01",
+      "category": "VIBE Coding",
+      "image": "https://via.placeholder.com/400x300?text=VIBE+Coding",
+      "url": "#"
+    },
+    {
+      "id": "3",
+      "title": "Generative AI: New Frontiers and Challenges",
+      "summary": "New techniques are emerging to overcome the limitations of large language models.",
+      "description": "Combined with VIBE-based modeling, prompt engineering delivers more accurate results.",
+      "source": "AI News",
+      "date": "2024-11-30",
+      "category": "AI",
+      "image": "https://via.placeholder.com/400x300?text=Generative+AI",
+      "url": "#"
+    },
+    {
+      "id": "4",
+      "title": "Real-Time AI Learning Systems Go Commercial",
+      "summary": "Real-time AI learning systems that run on edge devices are now available as commercial products.",
+      "description": "Lightweight AI models implemented with VIBE coding run efficiently on mobile devices.",
+      "source": "Tech Innovation",
+      "date": "2024-11-28",
+      "category": "AI & VIBE",
+      "image": "https://via.placeholder.com/400x300?text=Real-time+AI",
+      "url": "#"
+    }
+  ]
+}

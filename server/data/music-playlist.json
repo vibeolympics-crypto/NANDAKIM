@@ -1,0 +1,15 @@
+{
+  "config": {
+    "enabled": true,
+    "autoplay": true,
+    "defaultVolume": 70,
+    "playbackMode": "random",
+    "position": "bottom-right",
+    "maxTracks": 50,
+    "attribution": {
+      "text": "Music created by the website operator using AI",
+      "showSunoAI": true
+    }
+  },
+  "tracks": []
+}
