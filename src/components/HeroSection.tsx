@@ -16,144 +16,8 @@ export interface YouTubeVideo {
   publishedAt: string;
 }
 
-// API 베이스 URL (개발/프로덕션 환경 지원)
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
-
-// 자체 프록시 사용 (보안상 외부 프록시 사용 금지)
-const getYouTubeProxyUrl = (channelId: string): string => {
-  return `${API_BASE}/api/proxy/youtube?channelId=${encodeURIComponent(channelId)}`;
-};
-
-// RSS URL에서 채널 ID 추출
-const extractChannelId = (rssUrl: string): string | null => {
-  const match = rssUrl.match(/channel_id=([a-zA-Z0-9_-]+)/);
-  return match ? match[1] : null;
-};
-
-// YouTube RSS URL 직접 사용
-const HERO_YOUTUBE_RSS_URLS = [
-  'https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA',
-  'https://www.youtube.com/feeds/videos.xml?channel_id=UCds72zs2EzQRmhqbLLCmD4A',
-  'https://www.youtube.com/feeds/videos.xml?channel_id=UCdNqxwnqpXJpMt47WE7Bwwg',
-  'https://www.youtube.com/feeds/videos.xml?channel_id=UCfBvs0ZJdTA43NQrnI9imGA',
-  'https://www.youtube.com/feeds/videos.xml?channel_id=UCs9CAWTWvoroM95k7hne8wg',
-];
-
-/**
- * YouTube RSS에서 첫 번째 영상 가져오기
- */
-const fetchYouTubeVideo = async (rssUrl: string): Promise<YouTubeVideo | null> => {
-  try {
-    // RSS URL에서 채널 ID 추출
-    const channelId = extractChannelId(rssUrl);
-    if (!channelId) {
-      throw new Error('채널 ID를 추출할 수 없습니다');
-    }
-
-    let xmlText: string | null = null;
-
-    // 자체 프록시로 YouTube RSS 피드 가져오기
-    const proxyUrl = getYouTubeProxyUrl(channelId);
-    const response = await Promise.race([
-      fetch(proxyUrl, {
-        headers: { 'Accept': 'application/rss+xml, application/xml, text/xml' }
-      }),
-      new Promise<Response>((_, reject) =>
-        setTimeout(() => reject(new Error('Timeout')), 10000)
-      ),
-    ]);
-
-    if (response.ok) {
-      xmlText = await response.text();
-    } else {
-      throw new Error(`프록시 응답 오류: ${response.status}`);
-    }
-
-    if (!xmlText) {
-      throw new Error('YouTube RSS를 가져올 수 없습니다');
-    }
-
-    // XML 파싱
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
-    
-    if (xmlDoc.getElementsByTagName('parsererror').length > 0) {
-      throw new Error('XML 파싱 오류');
-    }
-
-    const entry = xmlDoc.getElementsByTagName('entry')[0];
-    if (!entry) {
-      console.warn('[YouTube RSS] entry 요소 없음');
-      return null;
-    }
-
-    // 제목 추출
-    const titleEl = entry.getElementsByTagName('title')[0];
-    const title = titleEl?.textContent || '제목 없음';
-
-    // 비디오 ID 추출 (여러 방법 시도)
-    let videoId = '';
-    
-    // 방법 1: 모든 요소를 순회하면서 videoId 찾기
-    const allElements = entry.getElementsByTagName('*');
-    for (let i = 0; i < allElements.length; i++) {
-      const el = allElements[i];
-      if (el.localName === 'videoId' || el.tagName.includes('videoId')) {
-        videoId = el.textContent || '';
-        if (videoId) {
-          break;
-        }
-      }
-    }
-    
-    // 방법 2: id 요소에서 추출 (yt:video:XXXX 형식)
-    if (!videoId) {
-      const idEl = entry.getElementsByTagName('id')[0];
-      const idText = idEl?.textContent || '';
-      const match = idText.match(/yt:video:([a-zA-Z0-9_-]+)/);
-      if (match) {
-        videoId = match[1];
-      }
-    }
-
-    // 방법 3: link href에서 추출
-    if (!videoId) {
-      const links = entry.getElementsByTagName('link');
-      for (let i = 0; i < links.length; i++) {
-        const href = links[i].getAttribute('href') || '';
-        const match = href.match(/v=([a-zA-Z0-9_-]+)/);
-        if (match) {
-          videoId = match[1];
-          break;
-        }
-      }
-    }
-
-    if (!videoId) {
-      console.warn('[YouTube RSS] videoId를 찾을 수 없음');
-      return null;
-    }
-
-    // 썸네일 생성
-    const thumbnail = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-    const url = `https://www.youtube.com/watch?v=${videoId}`;
-
-    // 발행 날짜
-    const publishedEl = entry.getElementsByTagName('published')[0];
-    const publishedAt = publishedEl?.textContent || new Date().toISOString();
-
-    return {
-      id: videoId,
-      title,
-      url,
-      thumbnail,
-      publishedAt,
-    };
-  } catch (error) {
-    console.error('[YouTube RSS] 오류:', error);
-    return null;
-  }
-};
+// 정적 사이트 배포를 위해 정적 JSON 파일 사용
+const HERO_VIDEOS_JSON_URL = '/hero-videos.json';
 
 export const HeroSection = ({ theme }: HeroSectionProps) => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -161,20 +25,23 @@ export const HeroSection = ({ theme }: HeroSectionProps) => {
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // YouTube RSS URLs 로드
+  // 정적 JSON 파일에서 YouTube 비디오 로드
   useEffect(() => {
     const loadYouTubeVideos = async () => {
       try {
         setLoading(true);
 
-        // 5개 URL에서 동시에 영상 가져오기
-        const videoPromises = HERO_YOUTUBE_RSS_URLS.map(url => fetchYouTubeVideo(url));
-        const results = await Promise.all(videoPromises);
+        const response = await fetch(HERO_VIDEOS_JSON_URL);
+        if (!response.ok) {
+          throw new Error('비디오 파일 로드 실패');
+        }
 
-        const loadedVideos = results.filter((video): video is YouTubeVideo => video !== null);
+        const data = await response.json();
+        const loadedVideos: YouTubeVideo[] = data?.videos || [];
 
         setVideos(loadedVideos);
-      } catch {
+      } catch (error) {
+        console.warn('[HERO Videos] 로드 실패:', error);
         setVideos([]);
       } finally {
         setLoading(false);
