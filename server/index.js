@@ -17,6 +17,7 @@ import contactRoutes from './routes/contactForm.js';
 import publicMediaRoutes from './routes/publicMedia.js';
 import musicRoutes from './routes/music.js';
 import aiVibeNewsRoutes from './routes/aiVibeNews.js';
+import proxyRoutes from './routes/proxy.js';
 import {
   globalErrorHandler,
   notFoundHandler,
@@ -192,6 +193,12 @@ app.use('/api/music', musicRoutes);
  * AI & VIBE News routes (RSS proxy)
  */
 app.use('/api/news', aiVibeNewsRoutes);
+
+/**
+ * Proxy routes for RSS/YouTube feeds
+ * Replaces external CORS proxies with self-hosted solution
+ */
+app.use('/api/proxy', proxyRoutes);
 
 
 

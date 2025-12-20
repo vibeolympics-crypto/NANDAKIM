@@ -1,8 +1,33 @@
 import { useState, useEffect } from 'react';
-import { Zap, Brain, TrendingUp, GraduationCap, Briefcase, Award, Users } from 'lucide-react';
+import { Zap, Brain, TrendingUp, GraduationCap, Briefcase, Award, Users, LucideIcon } from 'lucide-react';
 import { Button } from './ui/button';
 
-const iconMap: Record<string, any> = {
+// Type definitions
+interface Certification {
+  id?: string;
+  name: string;
+  issuer?: string;
+  date?: string;
+}
+
+interface CareerTimelineItem {
+  icon?: string;
+  year: string;
+  title: string;
+  description: string;
+  type?: string;
+}
+
+interface AboutData {
+  name?: string;
+  title?: string;
+  biography?: string;
+  profileImage?: string;
+  certifications?: (Certification | string)[];
+  careerTimeline?: CareerTimelineItem[];
+}
+
+const iconMap: Record<string, LucideIcon> = {
   GraduationCap,
   Briefcase,
   Award,
@@ -10,7 +35,7 @@ const iconMap: Record<string, any> = {
 };
 
 export const AboutSection = () => {
-  const [aboutData, setAboutData] = useState<any>(null);
+  const [aboutData, setAboutData] = useState<AboutData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -116,9 +141,9 @@ export const AboutSection = () => {
   const qualifications = aboutData ? (aboutData.certifications || []) : defaultQualifications;
 
   const timeline = aboutData
-    ? (aboutData.careerTimeline || []).map((item: any) => ({
+    ? (aboutData.careerTimeline || []).map((item: CareerTimelineItem) => ({
       ...item,
-      icon: iconMap[item.icon] || Briefcase,
+      icon: iconMap[item.icon || ''] || Briefcase,
     }))
     : defaultTimeline;
 
@@ -208,7 +233,7 @@ export const AboutSection = () => {
               <div className="mt-4 pt-3">
                 <h4 className="text-lg font-bold mb-3 text-foreground">자격 및 이력</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
-                  {qualifications.map((qualification: any, index: number) => {
+                  {qualifications.map((qualification: Certification | string, index: number) => {
                     // Handle both string and object formats
                     const name = typeof qualification === 'string' ? qualification : qualification.name;
                     const details = typeof qualification === 'object' ? qualification : null;

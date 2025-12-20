@@ -16,11 +16,19 @@ export interface YouTubeVideo {
   publishedAt: string;
 }
 
-// CORS 프록시 목록
-const YOUTUBE_PROXIES = [
-  (url: string) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
-  (url: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-];
+// API 베이스 URL (개발/프로덕션 환경 지원)
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
+
+// 자체 프록시 사용 (보안상 외부 프록시 사용 금지)
+const getYouTubeProxyUrl = (channelId: string): string => {
+  return `${API_BASE}/api/proxy/youtube?channelId=${encodeURIComponent(channelId)}`;
+};
+
+// RSS URL에서 채널 ID 추출
+const extractChannelId = (rssUrl: string): string | null => {
+  const match = rssUrl.match(/channel_id=([a-zA-Z0-9_-]+)/);
+  return match ? match[1] : null;
+};
 
 // YouTube RSS URL 직접 사용
 const HERO_YOUTUBE_RSS_URLS = [
@@ -36,34 +44,33 @@ const HERO_YOUTUBE_RSS_URLS = [
  */
 const fetchYouTubeVideo = async (rssUrl: string): Promise<YouTubeVideo | null> => {
   try {
-    let xmlText: string | null = null;
-    
-    // 여러 프록시 시도
-    for (let i = 0; i < YOUTUBE_PROXIES.length; i++) {
-      try {
-        const proxyUrl = YOUTUBE_PROXIES[i](rssUrl);
-        const response = await Promise.race([
-          fetch(proxyUrl, {
-            headers: { 'Accept': 'application/rss+xml, application/xml, text/xml' }
-          }),
-          new Promise<Response>((_, reject) =>
-            setTimeout(() => reject(new Error('Timeout')), 8000)
-          ),
-        ]);
+    // RSS URL에서 채널 ID 추출
+    const channelId = extractChannelId(rssUrl);
+    if (!channelId) {
+      throw new Error('채널 ID를 추출할 수 없습니다');
+    }
 
-        if (response.ok) {
-          xmlText = await response.text();
-          console.log(`[YouTube RSS] 프록시 ${i + 1}에서 성공적으로 로드됨`);
-          break;
-        }
-      } catch (err) {
-        console.warn(`[YouTube RSS] 프록시 ${i + 1} 실패:`, (err as Error).message);
-        continue;
-      }
+    let xmlText: string | null = null;
+
+    // 자체 프록시로 YouTube RSS 피드 가져오기
+    const proxyUrl = getYouTubeProxyUrl(channelId);
+    const response = await Promise.race([
+      fetch(proxyUrl, {
+        headers: { 'Accept': 'application/rss+xml, application/xml, text/xml' }
+      }),
+      new Promise<Response>((_, reject) =>
+        setTimeout(() => reject(new Error('Timeout')), 10000)
+      ),
+    ]);
+
+    if (response.ok) {
+      xmlText = await response.text();
+    } else {
+      throw new Error(`프록시 응답 오류: ${response.status}`);
     }
 
     if (!xmlText) {
-      throw new Error('모든 프록시에서 실패');
+      throw new Error('YouTube RSS를 가져올 수 없습니다');
     }
 
     // XML 파싱
@@ -94,7 +101,6 @@ const fetchYouTubeVideo = async (rssUrl: string): Promise<YouTubeVideo | null> =
       if (el.localName === 'videoId' || el.tagName.includes('videoId')) {
         videoId = el.textContent || '';
         if (videoId) {
-          console.log('[YouTube RSS] videoId (방법1):', videoId);
           break;
         }
       }
@@ -107,7 +113,6 @@ const fetchYouTubeVideo = async (rssUrl: string): Promise<YouTubeVideo | null> =
       const match = idText.match(/yt:video:([a-zA-Z0-9_-]+)/);
       if (match) {
         videoId = match[1];
-        console.log('[YouTube RSS] videoId (방법2):', videoId);
       }
     }
 
@@ -119,7 +124,6 @@ const fetchYouTubeVideo = async (rssUrl: string): Promise<YouTubeVideo | null> =
         const match = href.match(/v=([a-zA-Z0-9_-]+)/);
         if (match) {
           videoId = match[1];
-          console.log('[YouTube RSS] videoId (방법3):', videoId);
           break;
         }
       }
@@ -137,13 +141,6 @@ const fetchYouTubeVideo = async (rssUrl: string): Promise<YouTubeVideo | null> =
     // 발행 날짜
     const publishedEl = entry.getElementsByTagName('published')[0];
     const publishedAt = publishedEl?.textContent || new Date().toISOString();
-
-    console.log('[YouTube RSS] ✅ 영상 로드 완료:', {
-      videoId,
-      title,
-      url,
-      thumbnail,
-    });
 
     return {
       id: videoId,
@@ -169,18 +166,15 @@ export const HeroSection = ({ theme }: HeroSectionProps) => {
     const loadYouTubeVideos = async () => {
       try {
         setLoading(true);
-        console.log('[HeroSection] YouTube RSS 로드 시작...');
-        
+
         // 5개 URL에서 동시에 영상 가져오기
         const videoPromises = HERO_YOUTUBE_RSS_URLS.map(url => fetchYouTubeVideo(url));
         const results = await Promise.all(videoPromises);
-        
+
         const loadedVideos = results.filter((video): video is YouTubeVideo => video !== null);
-        
-        console.log(`[HeroSection] ✅ ${loadedVideos.length}개 영상 로드 완료`);
+
         setVideos(loadedVideos);
-      } catch (error) {
-        console.error('[HeroSection] 오류:', error);
+      } catch {
         setVideos([]);
       } finally {
         setLoading(false);

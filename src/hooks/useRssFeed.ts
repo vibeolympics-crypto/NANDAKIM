@@ -1,17 +1,13 @@
 import { useState, useEffect } from 'react';
 import { BlogPost } from '@/lib/api';
 
-// CORS 프록시 서비스 목록
-// 프로덕션에서는 VITE_RSS_PROXY_URL 환경변수로 자체 프록시 설정 권장
-const RSS_PROXIES = [
-  // 자체 프록시가 설정되어 있으면 최우선 사용
-  ...(import.meta.env.VITE_RSS_PROXY_URL 
-    ? [(url: string) => `${import.meta.env.VITE_RSS_PROXY_URL}?url=${encodeURIComponent(url)}`]
-    : []),
-  // 폴백: 외부 프록시 서비스 (안정적인 서비스만 유지, Heroku 제거)
-  (url: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-  (url: string) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
-];
+// API 베이스 URL (개발/프로덕션 환경 지원)
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
+
+// 자체 프록시 사용 (보안상 외부 프록시 사용 금지)
+const getProxyUrl = (url: string): string => {
+  return `${API_BASE}/api/proxy/rss?url=${encodeURIComponent(url)}`;
+};
 
 /**
  * RSS 피드를 파싱하여 블로그 포스트를 가져오는 훅
@@ -26,20 +22,16 @@ export const useRssFeed = (rssUrl: string, limit: number = 10) => {
   useEffect(() => {
     // RSS URL이 없으면 로컬 블로그 데이터 로드 시도
     if (!rssUrl) {
-      console.log('[RSS] RSS URL이 없음. 로컬 블로그 데이터 로드 시도...');
       const loadLocalBlogData = async () => {
         try {
           const response = await fetch('/blog.json');
           if (response.ok) {
             const data = await response.json();
-            console.log('[RSS] ✅ 로컬 블로그 데이터 로드 성공:', data.posts?.length || 0, '개');
             setPosts(data.posts || []);
           } else {
-            console.warn('[RSS] 로컬 블로그 데이터 HTTP 오류:', response.status);
             setPosts([]);
           }
-        } catch (err) {
-          console.warn('[RSS] 로컬 블로그 데이터 로드 실패:', err);
+        } catch {
           setPosts([]);
         } finally {
           setLoading(false);
@@ -55,34 +47,28 @@ export const useRssFeed = (rssUrl: string, limit: number = 10) => {
         setError(null);
 
         let xmlText: string | null = null;
-        let lastError: Error | null = null;
 
-        // 여러 프록시 시도
-        for (let i = 0; i < RSS_PROXIES.length; i++) {
-          try {
-            const proxyUrl = RSS_PROXIES[i](rssUrl);
-            console.log(`[RSS] 프록시 ${i + 1} 시도: ${proxyUrl.substring(0, 50)}...`);
-            
-            const response = await fetch(proxyUrl, {
-              headers: {
-                'Accept': 'application/rss+xml, application/xml, text/xml',
-              }
-            });
+        // 자체 프록시로 RSS 피드 가져오기
+        try {
+          const proxyUrl = getProxyUrl(rssUrl);
 
-            if (response.ok) {
-              xmlText = await response.text();
-              console.log(`[RSS] 프록시 ${i + 1} 성공!`);
-              break;
+          const response = await fetch(proxyUrl, {
+            headers: {
+              'Accept': 'application/rss+xml, application/xml, text/xml',
             }
-          } catch (err) {
-            lastError = err instanceof Error ? err : new Error('Unknown error');
-            console.warn(`[RSS] 프록시 ${i + 1} 실패:`, lastError.message);
-            continue;
+          });
+
+          if (response.ok) {
+            xmlText = await response.text();
+          } else {
+            throw new Error(`프록시 응답 오류: ${response.status}`);
           }
+        } catch (err) {
+          throw err instanceof Error ? err : new Error('RSS 피드 가져오기 실패');
         }
 
         if (!xmlText) {
-          throw lastError || new Error('모든 프록시 시도 실패');
+          throw new Error('RSS 피드를 가져올 수 없습니다');
         }
 
         // XML 파싱
@@ -169,24 +155,17 @@ export const useRssFeed = (rssUrl: string, limit: number = 10) => {
         });
 
         setPosts(parsedPosts);
-      } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : 'RSS 피드를 가져오는 중 오류가 발생했습니다';
-        console.warn('[RSS] RSS 피드 로드 실패:', errorMessage);
-        console.log('[RSS] 로컬 블로그 데이터 로드 시도...');
-        
+      } catch {
         // RSS 피드 로드 실패 시 로컬 블로그 데이터 로드 시도
         try {
           const response = await fetch('/blog.json');
           if (response.ok) {
             const data = await response.json();
-            console.log('[RSS] ✅ 로컬 블로그 데이터 로드 성공:', data.posts?.length || 0, '개');
             setPosts(data.posts || []);
           } else {
-            console.warn('[RSS] 로컬 블로그 데이터 HTTP 오류:', response.status);
             setPosts([]);
           }
-        } catch (localErr) {
-          console.warn('[RSS] 로컬 블로그 데이터 로드도 실패:', localErr);
+        } catch {
           setPosts([]);
         }
         setError(null); // 에러 상태 해제 (블로그 데이터 표시 가능하도록)

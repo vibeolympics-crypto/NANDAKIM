@@ -72,7 +72,7 @@ export const Footer = () => {
         const response = await apiClient.get<{
           contact: ContactInfo;
           footer: FooterContent;
-          map?: any;
+          map?: unknown;
         }>('/api/content/contact');
         if (response.ok && response.data) {
           // apiClient already unwraps the data, so response.data contains { contact, footer, map }
@@ -112,7 +112,7 @@ export const Footer = () => {
 
   const socialButtons: Array<{
     key: keyof ContactInfo['socialMedia'];
-    icon: ComponentType<any>;
+    icon: ComponentType<{ className?: string }>;
     label: string;
     className: string;
     fallbackKey?: keyof ContactInfo['socialMedia'];

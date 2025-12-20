@@ -8,11 +8,14 @@ const SOURCE_COLOR_MAP: Record<string, { bg: string; text: string }> = {
   'AI타임스': { bg: 'bg-blue-500/10', text: 'text-blue-600' },
   'ZDNet Korea': { bg: 'bg-cyan-500/10', text: 'text-cyan-600' },
   '블로터': { bg: 'bg-purple-500/10', text: 'text-purple-600' },
+  'ITWorld Korea': { bg: 'bg-emerald-500/10', text: 'text-emerald-600' },
+  '요즘IT': { bg: 'bg-orange-500/10', text: 'text-orange-600' },
 };
 
 // 카테고리별 색상 맵
 const CATEGORY_COLOR_MAP: Record<string, { bg: string; text: string }> = {
   'AI': { bg: 'bg-blue-500/10', text: 'text-blue-600' },
+  'IT': { bg: 'bg-cyan-500/10', text: 'text-cyan-600' },
   'VIBE': { bg: 'bg-purple-500/10', text: 'text-purple-600' },
   'AI & VIBE': { bg: 'bg-pink-500/10', text: 'text-pink-600' },
   'VIBE Coding': { bg: 'bg-indigo-500/10', text: 'text-indigo-600' },

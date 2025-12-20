@@ -58,7 +58,7 @@ export function SNSContactIcons({
   useEffect(() => {
     const loadContactInfo = async () => {
       try {
-        const response = await apiClient.get<{ contact: ContactInfo; footer?: any; map?: any }>(
+        const response = await apiClient.get<{ contact: ContactInfo; footer?: unknown; map?: unknown }>(
           '/api/content/contact'
         );
         if (response.ok && response.data) {

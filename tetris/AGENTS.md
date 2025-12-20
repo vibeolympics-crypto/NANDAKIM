@@ -1,7 +1,9 @@
 # AGENTS.md
-> Version: 1.0.0
+> Version: 2.0.0
 > Updated: 2025-12-20
 > Scope: Tetris mini-app (Vite + TypeScript)
+
+---
 
 ## Module Context
 - Standalone Vite project under tetris/ with its own package.json.

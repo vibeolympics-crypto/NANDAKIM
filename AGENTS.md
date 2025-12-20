@@ -3,6 +3,8 @@
 > Updated: 2025-12-20
 > Compatibility: React (Vite) / Express / TypeScript / Node 18+
 
+---
+
 ## Role
 Portfolio monorepo control tower for frontend (src), backend API (server), and mini-app (tetris). Centralize governance; delegate specifics to nested AGENTS.
 
@@ -45,6 +47,7 @@ BACKUP_CMD=npm run backup
 - Follow TypeScript typing; avoid `any` unless justified.
 - Keep prod code free of debug logs; use structured logger utilities where provided.
 - Preserve accessibility (ARIA), security headers, and middleware order.
+- Never use external CORS proxies (corsproxy.io, allorigins.win, cors-anywhere). Use self-hosted proxy via server/routes or proper CORS configuration.
 
 ## Validation Flow
 - Quick check (default): npm run verify:integrity, npm run lint, npm run test:run, npm run preview (build smoke), npm run server (only if backend touched).
@@ -60,3 +63,26 @@ BACKUP_CMD=npm run backup
 - Branch naming: feature/{name}, fix/{issue}, chore/{task}.
 - Commits: concise prefixes (feat/fix/refactor/docs/test/chore/style).
 - Keep files under 500 lines here; no emojis; concise actionable language only.
+
+---
+
+## Known Issues (2025-12-20 Audit - Updated)
+
+### Resolved
+1. External CORS proxy: Migrated to self-hosted proxy (server/routes/proxy.js)
+2. console.log cleanup: Removed from component files (tsx)
+3. ESLint warnings: Reduced from 108 to ~90
+
+### Remaining Warnings (Non-Critical)
+1. ESLint warnings: ~90 total
+   - @typescript-eslint/no-explicit-any: ~60 occurrences (mostly in lib/ utilities)
+   - react-hooks/exhaustive-deps: ~10 occurrences
+   - react-refresh/only-export-components: ~12 occurrences (shadcn/ui components)
+2. console.log in main.tsx: Development-only logs (acceptable)
+
+### Passed Checks
+- TypeScript type check: No errors
+- ESLint errors: 0
+- Hardcoded secrets: None detected
+- XSS vulnerabilities (innerHTML): None detected
+- External CORS proxy: None (migrated to self-hosted)

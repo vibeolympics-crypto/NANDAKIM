@@ -116,10 +116,11 @@ const MusicPlayerInner = memo(function MusicPlayerInner({
 
   // Cleanup effect
   useEffect(() => {
+    const timeoutRef = volumeTimeoutRef;
     return () => {
       // Cleanup volume timeout
-      if (volumeTimeoutRef.current) {
-        clearTimeout(volumeTimeoutRef.current);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
       }
     };
   }, []);
@@ -164,9 +165,7 @@ const MusicPlayerInner = memo(function MusicPlayerInner({
 
   // Get current track - memoized to avoid recalculation
   const currentTrack = useMemo(() => {
-    const track = getCurrentTrack();
-    console.log(`[MusicPlayer] Current track updated: index=${state.currentTrackIndex}, track=${track?.title || 'null'}, url=${track?.url || 'null'}`);
-    return track;
+    return getCurrentTrack();
   }, [getCurrentTrack, state.currentTrackIndex]);
 
   // Preload next track for smoother transitions
@@ -262,7 +261,6 @@ const MusicPlayerInner = memo(function MusicPlayerInner({
         const now = Date.now();
         // Debounce: prevent rapid track skipping (minimum 1 second between skips)
         if (now - lastErrorTimeRef.current < 1000) {
-          console.log('[MusicPlayer] Debouncing error skip - too fast');
           return;
         }
 
@@ -274,7 +272,6 @@ const MusicPlayerInner = memo(function MusicPlayerInner({
         // Delay the skip to allow state to settle
         errorSkipTimeoutRef.current = setTimeout(() => {
           lastErrorTimeRef.current = Date.now();
-          console.log('[MusicPlayer] Skipping to next track due to error');
           nextTrack();
         }, 500);
       }
@@ -333,14 +330,12 @@ const MusicPlayerInner = memo(function MusicPlayerInner({
   // Handle track selection from visualizer
   const handleTrackSelect = useCallback(
     (index: number) => {
-      console.log(`[MusicPlayer] Track selected: index=${index}, trackId=${state.tracks[index]?.id}`);
       setHasUserInteracted(true);
       setAutoplayBlocked(false);
       dispatch({ type: 'SET_CURRENT_TRACK_INDEX', payload: index });
       dispatch({ type: 'SET_PLAYING', payload: true });
-      console.log(`[MusicPlayer] Dispatched SET_CURRENT_TRACK_INDEX and SET_PLAYING`);
     },
-    [dispatch, state.tracks]
+    [dispatch]
   );
 
   // Requirement 10.2: Display empty playlist message with enhanced styling
@@ -549,7 +544,6 @@ const MusicPlayerInner = memo(function MusicPlayerInner({
                   <button
                     key={track.id || index}
                     onClick={() => {
-                      console.log(`[Playlist Item Click] Clicked track: index=${index}, title=${track.title}`);
                       handleTrackSelect(index);
                       setShowPlaylistPanel(false);
                     }}

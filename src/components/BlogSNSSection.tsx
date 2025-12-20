@@ -13,11 +13,13 @@ interface BlogSNSSectionProps {
   onRetryBlog?: () => void;
 }
 
-// CORS 프록시 목록
-const YOUTUBE_PROXIES = [
-  (url: string) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
-  (url: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-];
+// API 베이스 URL (개발/프로덕션 환경 지원)
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
+
+// 자체 프록시 사용 (보안상 외부 프록시 사용 금지)
+const getYouTubeProxyUrl = (channelId: string): string => {
+  return `${API_BASE}/api/proxy/youtube?channelId=${encodeURIComponent(channelId)}`;
+};
 
 // Blog 섹션 YouTube 영상 (고정)
 // URL: https://youtu.be/A290RPBxIUw?si=21O6lD1I53Ee5v2J
@@ -29,38 +31,45 @@ const BLOG_YOUTUBE_VIDEO = {
 };
 
 /**
+ * RSS URL에서 채널 ID 추출
+ */
+const extractChannelId = (rssUrl: string): string | null => {
+  const match = rssUrl.match(/channel_id=([a-zA-Z0-9_-]+)/);
+  return match ? match[1] : null;
+};
+
+/**
  * YouTube RSS에서 첫 번째 영상 가져오기
  */
 const fetchYouTubeVideo = async (rssUrl: string) => {
   try {
-    let xmlText: string | null = null;
-    
-    // 여러 프록시 시도
-    for (let i = 0; i < YOUTUBE_PROXIES.length; i++) {
-      try {
-        const proxyUrl = YOUTUBE_PROXIES[i](rssUrl);
-        const response = await Promise.race([
-          fetch(proxyUrl, {
-            headers: { 'Accept': 'application/rss+xml, application/xml, text/xml' }
-          }),
-          new Promise<Response>((_, reject) =>
-            setTimeout(() => reject(new Error('Timeout')), 8000)
-          ),
-        ]);
+    // RSS URL에서 채널 ID 추출
+    const channelId = extractChannelId(rssUrl);
+    if (!channelId) {
+      throw new Error('채널 ID를 추출할 수 없습니다');
+    }
 
-        if (response.ok) {
-          xmlText = await response.text();
-          console.log(`[Blog YouTube RSS] 프록시 ${i + 1}에서 성공적으로 로드됨`);
-          break;
-        }
-      } catch (err) {
-        console.warn(`[Blog YouTube RSS] 프록시 ${i + 1} 실패:`, (err as Error).message);
-        continue;
-      }
+    let xmlText: string | null = null;
+
+    // 자체 프록시로 YouTube RSS 피드 가져오기
+    const proxyUrl = getYouTubeProxyUrl(channelId);
+    const response = await Promise.race([
+      fetch(proxyUrl, {
+        headers: { 'Accept': 'application/rss+xml, application/xml, text/xml' }
+      }),
+      new Promise<Response>((_, reject) =>
+        setTimeout(() => reject(new Error('Timeout')), 10000)
+      ),
+    ]);
+
+    if (response.ok) {
+      xmlText = await response.text();
+    } else {
+      throw new Error(`프록시 응답 오류: ${response.status}`);
     }
 
     if (!xmlText) {
-      throw new Error('모든 프록시에서 실패');
+      throw new Error('YouTube RSS를 가져올 수 없습니다');
     }
 
     // XML 파싱
@@ -91,7 +100,6 @@ const fetchYouTubeVideo = async (rssUrl: string) => {
       if (el.localName === 'videoId' || el.tagName.includes('videoId')) {
         videoId = el.textContent || '';
         if (videoId) {
-          console.log('[Blog YouTube RSS] videoId (방법1):', videoId);
           break;
         }
       }
@@ -104,7 +112,6 @@ const fetchYouTubeVideo = async (rssUrl: string) => {
       const match = idText.match(/yt:video:([a-zA-Z0-9_-]+)/);
       if (match) {
         videoId = match[1];
-        console.log('[Blog YouTube RSS] videoId (방법2):', videoId);
       }
     }
 
@@ -116,7 +123,6 @@ const fetchYouTubeVideo = async (rssUrl: string) => {
         const match = href.match(/v=([a-zA-Z0-9_-]+)/);
         if (match) {
           videoId = match[1];
-          console.log('[Blog YouTube RSS] videoId (방법3):', videoId);
           break;
         }
       }
@@ -130,12 +136,6 @@ const fetchYouTubeVideo = async (rssUrl: string) => {
     // 썸네일 생성
     const thumbnail = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
     const url = `https://www.youtube.com/watch?v=${videoId}`;
-
-    console.log('[Blog YouTube RSS] ✅ 영상 로드 완료:', {
-      videoId,
-      title,
-      url,
-    });
 
     return { id: videoId, title, url, thumbnail };
   } catch (error) {
@@ -152,25 +152,14 @@ export function BlogSNSSection({
   onRetryBlog,
 }: BlogSNSSectionProps) {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
-  const [youtubeVideo, setYoutubeVideo] = useState<any>(null);
+  const [youtubeVideo, setYoutubeVideo] = useState<{ id: string; title: string; url: string; thumbnail: string } | null>(null);
   const [youtubeLoading, setYoutubeLoading] = useState(true);
 
   // YouTube 고정 영상 로드
   useEffect(() => {
-    console.log('[BlogSNSSection] YouTube 고정 영상 로드:', BLOG_YOUTUBE_VIDEO);
     setYoutubeVideo(BLOG_YOUTUBE_VIDEO);
     setYoutubeLoading(false);
   }, []);
-
-  // 디버깅 로그
-  if (process.env.NODE_ENV === 'development') {
-    console.log('[BlogSNSSection] Props:', {
-      blogPostsCount: blogPosts.length,
-      youtubeVideoLoaded: !!youtubeVideo,
-      isLoadingBlog,
-      blogError,
-    });
-  }
 
   // YouTube URL 생성
   const youtubeUrl = youtubeVideo?.url || 'https://www.youtube.com/@freeCodeCamp';

@@ -15,14 +15,19 @@ interface ProjectDetail {
   };
 }
 
+interface ProjectData extends ProjectDetail {
+  featured?: boolean;
+  order?: number;
+}
+
 // Featured Projects 최대 표시 개수
 const MAX_PROJECTS = 6;
 
 export const FeaturedHighlights = () => {
   // Load featured projects from imported JSON data (최대 6개)
-  const projects: ProjectDetail[] = projectsData.projects
-    .filter((p: any) => p.featured)
-    .sort((a: any, b: any) => a.order - b.order)
+  const projects: ProjectDetail[] = (projectsData.projects as ProjectData[])
+    .filter((p) => p.featured)
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
     .slice(0, MAX_PROJECTS);
 
   const handleMoreClick = (project: ProjectDetail) => {

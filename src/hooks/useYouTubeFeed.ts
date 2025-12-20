@@ -8,11 +8,13 @@ export interface YouTubeVideo {
   publishedAt: string;
 }
 
-// CORS 프록시 목록 (RSS 네이버 블로그 방식과 동일)
-const YOUTUBE_PROXIES = [
-  (url: string) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
-  (url: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-];
+// API 베이스 URL (개발/프로덕션 환경 지원)
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
+
+// 자체 프록시 사용 (보안상 외부 프록시 사용 금지)
+const getYouTubeProxyUrl = (channelId: string): string => {
+  return `${API_BASE}/api/proxy/youtube?channelId=${encodeURIComponent(channelId)}`;
+};
 
 /**
  * YouTube 채널의 영상 정보를 가져옵니다.
@@ -36,42 +38,34 @@ export const useYouTubeFeed = (
       setLoading(true);
       setError(null);
 
-      const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
-
       let xmlText: string | null = null;
-      let lastError: Error | null = null;
 
-      // 여러 프록시 시도
-      for (let i = 0; i < YOUTUBE_PROXIES.length; i++) {
-        try {
-          const proxyUrl = YOUTUBE_PROXIES[i](rssUrl);
-          console.log(`[YouTube RSS] 프록시 ${i + 1} 시도 (채널: ${channelId.substring(0, 8)}...)`);
-          
-          const response = await Promise.race([
-            fetch(proxyUrl, {
-              headers: {
-                'Accept': 'application/rss+xml, application/xml, text/xml',
-              }
-            }),
-            new Promise<Response>((_, reject) =>
-              setTimeout(() => reject(new Error('Timeout')), 8000)
-            ),
-          ]);
+      // 자체 프록시로 YouTube RSS 피드 가져오기
+      try {
+        const proxyUrl = getYouTubeProxyUrl(channelId);
 
-          if (response.ok) {
-            xmlText = await response.text();
-            console.log(`[YouTube RSS] 프록시 ${i + 1} 성공! (채널: ${channelId.substring(0, 8)}...)`);
-            break;
-          }
-        } catch (err) {
-          lastError = err instanceof Error ? err : new Error('Unknown error');
-          console.warn(`[YouTube RSS] 프록시 ${i + 1} 실패:`, lastError.message);
-          continue;
+        const response = await Promise.race([
+          fetch(proxyUrl, {
+            headers: {
+              'Accept': 'application/rss+xml, application/xml, text/xml',
+            }
+          }),
+          new Promise<Response>((_, reject) =>
+            setTimeout(() => reject(new Error('Timeout')), 10000)
+          ),
+        ]);
+
+        if (response.ok) {
+          xmlText = await response.text();
+        } else {
+          throw new Error(`프록시 응답 오류: ${response.status}`);
         }
+      } catch (err) {
+        throw err instanceof Error ? err : new Error('YouTube RSS 가져오기 실패');
       }
 
       if (!xmlText) {
-        throw lastError || new Error('모든 프록시 시도 실패');
+        throw new Error('YouTube RSS를 가져올 수 없습니다');
       }
 
       // XML 파싱

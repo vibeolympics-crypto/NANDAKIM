@@ -31,13 +31,13 @@ export const Header = ({ onThemeChange }: HeaderProps) => {
 
     // Cleanup function to clear any pending timeouts
     return () => {
-      const timeoutId = (window as any).__themeTransitionTimeout;
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-        delete (window as any).__themeTransitionTimeout;
+      const win = window as Window & { __themeTransitionTimeout?: ReturnType<typeof setTimeout> };
+      if (win.__themeTransitionTimeout) {
+        clearTimeout(win.__themeTransitionTimeout);
+        delete win.__themeTransitionTimeout;
       }
     };
-  }, []);
+  }, [theme]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -86,7 +86,7 @@ export const Header = ({ onThemeChange }: HeaderProps) => {
       }, 150);
 
       // Store timeout ID for cleanup
-      (window as any).__themeTransitionTimeout = timeoutId;
+      (window as Window & { __themeTransitionTimeout?: ReturnType<typeof setTimeout> }).__themeTransitionTimeout = timeoutId;
     }
 
     // Persist theme to localStorage

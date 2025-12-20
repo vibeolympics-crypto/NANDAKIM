@@ -67,18 +67,6 @@ const Index = () => {
   // RSS 피드가 있으면 RSS 데이터, 없으면 로컬 블로그 데이터 사용
   const combinedBlogPosts = rssPosts.length > 0 ? rssPosts : blogData.posts || [];
 
-  // 디버깅 로그
-  if (process.env.NODE_ENV === 'development') {
-    console.log('[Index] 블로그 데이터:', {
-      rssPostsCount: rssPosts.length,
-      localPostsCount: blogData.posts?.length || 0,
-      combinedPostsCount: combinedBlogPosts.length,
-      rssBlogLoading,
-      rssBlogError,
-      blogDataExists: !!blogData,
-    });
-  }
-
   return (
     <div className="min-h-screen font-['Roboto']">
       <Header onThemeChange={setTheme} />
