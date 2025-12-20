@@ -16,6 +16,7 @@ import contentRoutes from './routes/content.js';
 import contactRoutes from './routes/contactForm.js';
 import publicMediaRoutes from './routes/publicMedia.js';
 import musicRoutes from './routes/music.js';
+import aiVibeNewsRoutes from './routes/aiVibeNews.js';
 import {
   globalErrorHandler,
   notFoundHandler,
@@ -186,6 +187,11 @@ app.use('/api/media', publicMediaRoutes);
  * Requirements: 7.1, 7.2, 7.3, 7.4, 7.5, 8.1, 8.2, 8.3, 8.4, 8.5
  */
 app.use('/api/music', musicRoutes);
+
+/**
+ * AI & VIBE News routes (RSS proxy)
+ */
+app.use('/api/news', aiVibeNewsRoutes);
 
 
 

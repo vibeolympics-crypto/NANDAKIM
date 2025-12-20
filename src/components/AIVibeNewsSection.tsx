@@ -22,47 +22,8 @@ const CATEGORY_COLOR_MAP: Record<string, { bg: string; text: string }> = {
 const TOTAL_NEWS_LIMIT = 9;
 
 export function AIVibeNewsSection() {
-  // 📝 RSS 피드에서 뉴스 로드 (안정성: RSS 실패 시 로컬 JSON 사용)
-  // 3개 소스 x 3개 = 9개 뉴스 표시
-  const { news: rsNews, loading, error, lastUpdated } = useAIVibeNewsFeed(3);
-  
-  // Fallback: RSS 없으면 로컬 JSON 로드
-  const [localNews, setLocalNews] = useState<NewsItem[]>([]);
-  const [localLoading, setLocalLoading] = useState(!rsNews || rsNews.length === 0);
-
-  useEffect(() => {
-    // RSS 뉴스가 있으면 로컬 데이터 로드 스킵
-    if (rsNews && rsNews.length > 0) {
-      setLocalLoading(false);
-      return;
-    }
-
-    // RSS 로드 실패 시 로컬 JSON 로드 (loading = false일 때만 실행)
-    if (!loading && rsNews && rsNews.length === 0) {
-      const loadLocalNews = async () => {
-        try {
-          console.log('[뉴스] 로컬 JSON 로드 시작...');
-          const response = await fetch('/ai-vibe-news.json');
-          if (response.ok) {
-            const data = await response.json();
-            console.log(`[뉴스] ✅ 로컬 JSON 로드 성공: ${data.news?.length || 0}개`, data);
-            setLocalNews(data.news || []);
-          } else {
-            console.warn('[뉴스] 로컬 JSON 로드 실패 (HTTP):', response.status, response.statusText);
-          }
-        } catch (err) {
-          console.warn('[뉴스] 로컬 데이터 로드 실패:', err);
-        } finally {
-          setLocalLoading(false);
-        }
-      };
-
-      loadLocalNews();
-    }
-  }, [rsNews, loading]);
-
-  // 최종 뉴스 데이터 (RSS 우선, 실패 시 로컬)
-  const news = (rsNews && rsNews.length > 0) ? rsNews : localNews;
+  // 백엔드 프록시를 통해 9개 뉴스 요청 (3x3 그리드)
+  const { news, loading, error, lastUpdated } = useAIVibeNewsFeed(TOTAL_NEWS_LIMIT);
 
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -99,7 +60,7 @@ export function AIVibeNewsSection() {
   }, [news, selectedCategory]);
 
   // 로딩 상태 (초기 로딩 중)
-  const isInitialLoading = loading && localLoading && news.length === 0;
+  const isInitialLoading = loading && news.length === 0;
   
   if (isInitialLoading) {
     return (
@@ -252,24 +213,12 @@ export function AIVibeNewsSection() {
                       decoding="async"
                       onLoad={(e) => {
                         const target = e.target as HTMLImageElement;
-                        console.log(`[썸네일] ✅ 로드 성공`, {
-                          source: post.source,
-                          title: post.title.substring(0, 40),
-                          url: post.image.substring(0, 80),
-                          size: `${target.naturalWidth}x${target.naturalHeight}px`,
-                        });
+                        // 성공 시 별도 로그 없이 자연스럽게 표시
+                        target.style.opacity = '1';
                       }}
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
-                        console.error(`[썸네일] ❌ 로드 실패`, {
-                          source: post.source,
-                          title: post.title.substring(0, 50),
-                          imageUrl: post.image.substring(0, 100),
-                          errorEvent: e.type,
-                        });
-                        // 이미지 로드 실패 시 원본 이미지 숨기기
                         target.style.display = 'none';
-                        // Fallback 배경 표시
                         const fallback = target.parentElement?.querySelector('[data-fallback-bg]') as HTMLElement;
                         if (fallback) {
                           fallback.style.display = 'flex';
@@ -283,12 +232,6 @@ export function AIVibeNewsSection() {
                       data-fallback-bg
                       role="img"
                       aria-label={`${post.source} 뉴스 이미지`}
-                      onMouseEnter={() => {
-                        console.log('[Fallback] 사용 중:', {
-                          source: post.source,
-                          reason: '이미지 로드 실패',
-                        });
-                      }}
                     >
                       {/* 배경 패턴 */}
                       <div className="absolute inset-0 opacity-10">
