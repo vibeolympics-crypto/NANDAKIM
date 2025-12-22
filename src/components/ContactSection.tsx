@@ -96,11 +96,11 @@ export const ContactSection = () => {
 
       let response;
       if (contactApiUrl.startsWith('http')) {
-        // 외부 API (닷홈) 사용
+        // 외부 API (Cloudflare Worker) 사용
         const fetchResponse = await fetch(contactApiUrl, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json; charset=utf-8',
           },
           body: JSON.stringify(formData),
         });
