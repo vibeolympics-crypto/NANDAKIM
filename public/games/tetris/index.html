@@ -2,220 +2,367 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Tetris</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
+            overflow: hidden;
+            touch-action: manipulation;
         }
+
+        /* ===== 데스크톱 (769px 이상) ===== */
         #game-area {
             flex-direction: row;
-            gap: 0.01rem !important;
-            height: calc(100vh - 50px);
+            gap: 1rem;
+            height: calc(100vh - 60px);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1rem;
         }
         #game-board-container {
-            flex: 4;
+            flex: 3;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+        #game-board-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+        }
+        #game-board {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 10 / 20;
+            display: block;
         }
         #side-panel {
             flex: 2;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            justify-content: space-between;
+            gap: 0.75rem;
+            max-width: 200px;
         }
-        #desktop-controls {
+        #info-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        #controls-section {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 0.5rem;
-            margin-top: 0.5rem;
         }
-        #desktop-controls button {
-            height: 40px;
-            font-size: 1.25rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        #mobile-controls {
+            display: none;
         }
-        #rotate-button-desktop { grid-column: 1 / -1; }
-        #hard-drop-button-desktop { grid-column: 1 / -1; margin-top: 0.25rem; }
-        #game-board {
-            aspect-ratio: 10 / 20;
-            max-width: 100%;
-            max-height: 100%;
-            display: block;
-            margin: 0 auto;
-        }
+
+        /* ===== 태블릿 (481px ~ 768px) ===== */
         @media (max-width: 768px) {
             #game-area {
                 flex-direction: row;
-                gap: 0.01rem !important;
-                height: 100vh;
-                min-height: 100vh;
+                gap: 0.5rem;
+                height: calc(100vh - 50px);
                 padding: 0.5rem;
-                align-items: stretch;
-                justify-content: space-between;
             }
             #game-board-container {
-                flex: 7;
-                max-width: 70vw;
-                min-width: 0;
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: stretch;
-                justify-content: space-between;
+                flex: 5;
+            }
+            #game-board-wrapper {
+                max-width: 250px;
             }
             #side-panel {
                 flex: 3;
-                gap: 0.08rem;
-                padding: 0.5rem 0;
-                height: 100%;
-                min-width: 0;
-                overflow-y: auto;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
+                max-width: 160px;
+                gap: 0.5rem;
             }
-                        /* 하단 버튼 영역을 바닥에 정렬 */
-                        .grid.grid-cols-3 {
-                            align-items: flex-end !important;
-                        }
-            #pause-button, #restart-button {
-                margin: 0 2px;
+            #info-section {
+                gap: 0.5rem;
             }
-            .grid.grid-cols-3 {
-                margin-top: 0.05rem !important;
+            .info-panel {
+                padding: 0.5rem !important;
+            }
+            .info-panel h2 {
+                font-size: 0.65rem !important;
+            }
+            .info-panel p {
+                font-size: 0.875rem !important;
             }
             #next-piece {
-                width: 80px !important;
-                height: 80px !important;
+                width: 50px !important;
+                height: 50px !important;
             }
-            #desktop-controls {
-                display: none !important;
+            #controls-section button {
+                height: 36px !important;
+                font-size: 1rem !important;
             }
-            #pause-button, #restart-button {
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
-            }
-            .grid.grid-cols-3 button {
-                height: 40px;
-                font-size: 1rem;
+            .action-btn {
+                width: 36px !important;
+                height: 36px !important;
             }
         }
 
+        /* ===== 모바일 (480px 이하) ===== */
         @media (max-width: 480px) {
+            header {
+                padding: 0.25rem 0.5rem !important;
+            }
+            header h1 {
+                font-size: 0.875rem !important;
+            }
             #game-area {
-                flex-direction: row;
-                gap: 0.01rem !important;
-                height: 100vh;
-                min-height: 100vh;
+                flex-direction: column;
+                gap: 0.25rem;
+                height: calc(100vh - 30px);
                 padding: 0.25rem;
             }
             #game-board-container {
-                flex: 7;
-                max-width: 70vw;
-                min-width: 0;
+                flex: none;
+                height: auto;
+                max-height: 55vh;
+            }
+            #game-board-wrapper {
+                max-width: none;
+                width: auto;
                 height: 100%;
+                max-height: 55vh;
                 display: flex;
                 align-items: center;
                 justify-content: center;
             }
-            #side-panel {
-                flex: 3;
-                gap: 0.05rem;
-                padding: 0.25rem 0;
+            #game-board {
+                width: auto;
                 height: 100%;
+                max-height: 55vh;
+                aspect-ratio: 10 / 20;
+            }
+            #side-panel {
+                flex: 1;
+                flex-direction: column;
+                max-width: none;
+                width: 100%;
+                gap: 0.25rem;
+            }
+            #info-section {
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: stretch;
+                gap: 0.25rem;
+                flex-wrap: nowrap;
+            }
+            .info-panel {
+                flex: 1;
+                padding: 0.25rem !important;
                 min-width: 0;
-                overflow-y: auto;
             }
-            #pause-button, #restart-button {
-                margin: 0 1px;
+            .info-panel h2 {
+                font-size: 0.5rem !important;
+                margin-bottom: 0.125rem;
             }
-            .grid.grid-cols-3 {
-                margin-top: 0.02rem !important;
+            .info-panel p {
+                font-size: 0.75rem !important;
+            }
+            #next-piece-container {
+                min-width: 60px;
             }
             #next-piece {
-                width: 60px !important;
-                height: 60px !important;
+                width: 35px !important;
+                height: 35px !important;
             }
-            #pause-button, #restart-button {
-                width: 32px;
-                height: 32px;
-                font-size: 0.9rem;
+            .stats-row {
+                display: flex;
+                justify-content: space-around;
+                gap: 0.25rem;
             }
-            .grid.grid-cols-3 button {
-                height: 32px;
-                font-size: 0.9rem;
+            .stat-item {
+                text-align: center;
             }
+            #action-buttons {
+                display: none !important;
+            }
+            #controls-section {
+                display: none !important;
+            }
+            #mobile-controls {
+                display: grid !important;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 0.25rem;
+                padding: 0.25rem 0;
+                flex: none;
+            }
+            #mobile-controls button {
+                height: 44px;
+                font-size: 1.25rem;
+                border-radius: 0.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            #rotate-btn {
+                background: #38bdf8;
+            }
+            #left-btn, #down-btn, #right-btn {
+                background: #fb923c;
+            }
+            #drop-btn {
+                background: #a855f7;
+            }
+        }
+
+        /* ===== 아주 작은 화면 (360px 이하) ===== */
+        @media (max-width: 360px) {
+            #game-board-container {
+                max-height: 50vh;
+            }
+            #game-board-wrapper {
+                max-height: 50vh;
+            }
+            #game-board {
+                max-height: 50vh;
+            }
+            #mobile-controls button {
+                height: 40px;
+                font-size: 1.1rem;
+            }
+            .info-panel h2 {
+                font-size: 0.45rem !important;
+            }
+            .info-panel p {
+                font-size: 0.65rem !important;
+            }
+        }
+
+        /* Game Over Overlay */
+        #game-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            backdrop-filter: blur(4px);
+        }
+        #game-overlay.hidden {
+            display: none;
         }
     </style>
   <script type="module" crossorigin src="./assets/index-ZOYsxYBJ.js"></script>
 </head>
 <body class="bg-sky-100 text-slate-700 overflow-hidden">
+    <div class="w-full h-screen max-h-screen flex flex-col">
 
-    <div class="w-full h-screen max-h-screen flex flex-col items-center">
-        
-        <header class="w-full p-1 flex-shrink-0">
+        <header class="w-full p-2 flex-shrink-0">
             <h1 class="text-base font-bold text-sky-800 tracking-wider">TETRIS</h1>
         </header>
 
-        <main id="game-area" class="w-full flex-grow flex flex-row items-stretch gap-[1px] p-0 md:max-w-4xl md:mx-auto">
-            <!-- Game Board (A) -->
-            <div id="game-board-container" class="relative flex-[7] flex items-center justify-center m-0 p-0">
-                <div class="relative">
-                    <canvas id="game-board" class="bg-slate-200 rounded-lg shadow-inner w-full h-auto aspect-[10/20] block mx-auto"></canvas>
-                    <div id="game-overlay" class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 text-white text-4xl font-bold flex items-center justify-center rounded-lg backdrop-blur-sm pointer-events-auto">
-                        <button id="start-button" class="px-8 py-4 bg-sky-500 hover:bg-sky-600 rounded-lg text-2xl">Start Game</button>
+        <main id="game-area" class="w-full flex-grow flex">
+            <!-- Game Board -->
+            <div id="game-board-container">
+                <div id="game-board-wrapper">
+                    <canvas id="game-board" class="bg-slate-200 rounded-lg shadow-inner"></canvas>
+                    <div id="game-overlay">
+                        <button id="start-button" class="px-6 py-3 bg-sky-500 hover:bg-sky-600 text-white rounded-lg text-xl font-bold shadow-lg">
+                            Start Game
+                        </button>
                     </div>
                 </div>
             </div>
-            <!-- Side Panel (B) -->
-            <div id="side-panel" class="flex flex-col justify-between flex-[2.7] m-0 p-0">
-                <div class="flex flex-col gap-4">
-                    <!-- High Score Panel -->
-                    <div class="bg-white/70 rounded-lg shadow p-2 text-center">
+
+            <!-- Side Panel -->
+            <div id="side-panel">
+                <!-- Info Section -->
+                <div id="info-section">
+                    <!-- High Score -->
+                    <div class="info-panel bg-white/70 rounded-lg shadow p-2 text-center">
                         <h2 class="font-bold text-xs text-sky-800">HIGH SCORE</h2>
-                        <p id="high-score" class="text-base font-mono">0</p>
+                        <p id="high-score" class="text-base font-mono font-bold">0</p>
                     </div>
-                    <!-- Next Piece Panel -->
-                    <div id="next-piece-container" class="bg-white/70 rounded-lg shadow p-2 text-center">
+
+                    <!-- Next Piece -->
+                    <div id="next-piece-container" class="info-panel bg-white/70 rounded-lg shadow p-2 text-center">
                         <h2 class="font-bold text-xs text-sky-800">NEXT</h2>
-                        <canvas id="next-piece" class="mx-auto mt-1"></canvas>
+                        <canvas id="next-piece" class="mx-auto mt-1" width="60" height="60"></canvas>
                     </div>
-                    <!-- Stats Panel -->
-                    <div class="bg-white/70 rounded-lg shadow p-2 text-center">
+
+                    <!-- Stats -->
+                    <div class="info-panel bg-white/70 rounded-lg shadow p-2 text-center">
                         <h2 class="font-bold text-xs text-sky-800">SCORE</h2>
-                        <p id="score" class="text-base font-mono">0</p>
-                        <h2 class="font-bold text-xs text-sky-800 mt-2">ROWS</h2>
-                        <p id="rows" class="text-base font-mono">0</p>
-                        <h2 class="font-bold text-xs text-sky-800 mt-2">LEVEL</h2>
-                        <p id="level" class="text-base font-mono">0</p>
-                    </div>
-                    <!-- Action Buttons -->
-                    <div class="flex items-center justify-center gap-4 mt-2">
-                        <button id="pause-button" aria-label="Pause Game" class="w-10 h-10 bg-white/70 rounded-full shadow flex items-center justify-center text-lg text-sky-600 hover:bg-sky-200 disabled:opacity-50" disabled>❚❚</button>
-                        <button id="restart-button" aria-label="Restart Game" class="w-10 h-10 bg-white/70 rounded-full shadow flex items-center justify-center text-xl text-sky-600 hover:bg-sky-200 disabled:opacity-50" disabled>⟳</button>
+                        <p id="score" class="text-base font-mono font-bold">0</p>
+                        <h2 class="font-bold text-xs text-sky-800 mt-1">ROWS</h2>
+                        <p id="rows" class="text-base font-mono font-bold">0</p>
+                        <h2 class="font-bold text-xs text-sky-800 mt-1">LEVEL</h2>
+                        <p id="level" class="text-base font-mono font-bold">0</p>
                     </div>
                 </div>
-                <!-- Desktop Controls (키보드 방향 + 하드드랍) -->
-                <div class="grid grid-cols-3 gap-[2px] mt-4">
+
+                <!-- Action Buttons (Desktop/Tablet) -->
+                <div id="action-buttons" class="flex items-center justify-center gap-3">
+                    <button id="pause-button" aria-label="Pause Game" class="action-btn w-10 h-10 bg-white/70 rounded-full shadow flex items-center justify-center text-lg text-sky-600 hover:bg-sky-200 disabled:opacity-50" disabled>❚❚</button>
+                    <button id="restart-button" aria-label="Restart Game" class="action-btn w-10 h-10 bg-white/70 rounded-full shadow flex items-center justify-center text-xl text-sky-600 hover:bg-sky-200 disabled:opacity-50" disabled>⟳</button>
+                </div>
+
+                <!-- Desktop/Tablet Controls -->
+                <div id="controls-section">
                     <div></div>
-                    <button id="up-button-desktop" aria-label="Move Up" class="bg-sky-400 hover:bg-sky-500 text-white rounded-lg shadow flex justify-center items-center h-12 text-xl">↑</button>
+                    <button id="up-button-desktop" aria-label="Rotate" class="bg-sky-400 hover:bg-sky-500 text-white rounded-lg shadow flex justify-center items-center h-10 text-lg">↑</button>
                     <div></div>
-                    <button id="left-button-desktop" aria-label="Move Left" class="bg-orange-400 hover:bg-orange-500 text-white rounded-lg shadow flex justify-center items-center h-12 text-xl">←</button>
-                    <button id="down-button-desktop" aria-label="Move Down" class="bg-orange-400 hover:bg-orange-500 text-white rounded-lg shadow flex justify-center items-center h-12 text-xl">↓</button>
-                    <button id="right-button-desktop" aria-label="Move Right" class="bg-orange-400 hover:bg-orange-500 text-white rounded-lg shadow flex justify-center items-center h-12 text-xl">→</button>
-                    <button id="hard-drop-button-desktop" aria-label="Hard Drop" class="col-span-3 bg-purple-500 hover:bg-purple-600 text-white rounded-lg shadow flex justify-center items-center h-12 text-xl mt-1">⤓</button>
+                    <button id="left-button-desktop" aria-label="Move Left" class="bg-orange-400 hover:bg-orange-500 text-white rounded-lg shadow flex justify-center items-center h-10 text-lg">←</button>
+                    <button id="down-button-desktop" aria-label="Move Down" class="bg-orange-400 hover:bg-orange-500 text-white rounded-lg shadow flex justify-center items-center h-10 text-lg">↓</button>
+                    <button id="right-button-desktop" aria-label="Move Right" class="bg-orange-400 hover:bg-orange-500 text-white rounded-lg shadow flex justify-center items-center h-10 text-lg">→</button>
+                    <button id="hard-drop-button-desktop" aria-label="Hard Drop" class="col-span-3 bg-purple-500 hover:bg-purple-600 text-white rounded-lg shadow flex justify-center items-center h-10 text-lg mt-1">⤓</button>
+                </div>
+
+                <!-- Mobile Controls -->
+                <div id="mobile-controls">
+                    <button id="rotate-btn" aria-label="Rotate" class="text-white font-bold">⟳</button>
+                    <button id="left-btn" aria-label="Move Left" class="text-white font-bold">←</button>
+                    <button id="down-btn" aria-label="Move Down" class="text-white font-bold">↓</button>
+                    <button id="right-btn" aria-label="Move Right" class="text-white font-bold">→</button>
+                    <button id="drop-btn" aria-label="Hard Drop" class="text-white font-bold">⤓</button>
                 </div>
             </div>
         </main>
     </div>
+
+    <script>
+        // Mobile controls event binding
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileControls = {
+                'rotate-btn': 'up-button-desktop',
+                'left-btn': 'left-button-desktop',
+                'down-btn': 'down-button-desktop',
+                'right-btn': 'right-button-desktop',
+                'drop-btn': 'hard-drop-button-desktop'
+            };
+
+            Object.entries(mobileControls).forEach(([mobileId, desktopId]) => {
+                const mobileBtn = document.getElementById(mobileId);
+                const desktopBtn = document.getElementById(desktopId);
+
+                if (mobileBtn && desktopBtn) {
+                    ['touchstart', 'mousedown'].forEach(eventType => {
+                        mobileBtn.addEventListener(eventType, (e) => {
+                            e.preventDefault();
+                            desktopBtn.click();
+                        });
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
