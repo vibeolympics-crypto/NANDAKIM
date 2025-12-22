@@ -91,8 +91,8 @@ export const ContactSection = () => {
     setSubmitSuccess(false);
 
     try {
-      // 닷홈 API URL 사용 (환경 변수 또는 기본값)
-      const contactApiUrl = import.meta.env.VITE_CONTACT_API_URL || '/api/contact';
+      // Cloudflare Worker URL (환경 변수 또는 기본값)
+      const contactApiUrl = import.meta.env.VITE_CONTACT_API_URL || 'https://notion-contact-form.vibe-olympics.workers.dev';
 
       let response;
       if (contactApiUrl.startsWith('http')) {
