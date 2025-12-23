@@ -46,16 +46,20 @@ function transformNotionPage(page) {
     }
   }
 
-  // 요약/설명 추출
+  // 요약/설명 추출 (한글 속성명 지원)
   const summary = properties.Summary?.rich_text
     ? richTextToPlainText(properties.Summary.rich_text)
-    : properties.Description?.rich_text
-      ? richTextToPlainText(properties.Description.rich_text)
-      : '';
+    : properties['AI 자동 입력']?.rich_text
+      ? richTextToPlainText(properties['AI 자동 입력'].rich_text)
+      : properties.Description?.rich_text
+        ? richTextToPlainText(properties.Description.rich_text)
+        : '';
 
-  // 날짜 추출
+  // 날짜 추출 (한글 속성명 지원)
   let date = '';
-  if (properties.Date?.date?.start) {
+  if (properties['게시일']?.date?.start) {
+    date = properties['게시일'].date.start;
+  } else if (properties.Date?.date?.start) {
     date = properties.Date.date.start;
   } else if (properties.Created?.created_time) {
     date = properties.Created.created_time.split('T')[0];
@@ -63,9 +67,11 @@ function transformNotionPage(page) {
     date = page.created_time.split('T')[0];
   }
 
-  // 태그 추출
+  // 태그 추출 (한글 속성명 지원)
   const tags = [];
-  if (properties.Tags?.multi_select) {
+  if (properties['태그']?.multi_select) {
+    properties['태그'].multi_select.forEach(tag => tags.push(tag.name));
+  } else if (properties.Tags?.multi_select) {
     properties.Tags.multi_select.forEach(tag => tags.push(tag.name));
   } else if (properties.Category?.select) {
     tags.push(properties.Category.select.name);
@@ -95,9 +101,11 @@ function transformNotionPage(page) {
     url = properties.Link.url;
   }
 
-  // 작성자 추출
+  // 작성자 추출 (한글 속성명 지원)
   let author = 'Won Kim';
-  if (properties.Author?.people?.[0]?.name) {
+  if (properties['생성자']?.people?.[0]?.name) {
+    author = properties['생성자'].people[0].name;
+  } else if (properties.Author?.people?.[0]?.name) {
     author = properties.Author.people[0].name;
   } else if (properties.Author?.rich_text) {
     author = richTextToPlainText(properties.Author.rich_text) || author;
@@ -132,33 +140,10 @@ async function queryNotionDatabase(env, limit = 10) {
       page_size: limit,
       sorts: [
         {
-          property: 'Date',
+          property: '게시일',
           direction: 'descending',
         },
       ],
-      filter: {
-        or: [
-          {
-            property: 'Status',
-            select: {
-              equals: 'Published',
-            },
-          },
-          {
-            property: 'Status',
-            select: {
-              equals: '발행됨',
-            },
-          },
-          // Status 속성이 없는 경우를 위한 fallback
-          {
-            property: 'Status',
-            select: {
-              is_empty: true,
-            },
-          },
-        ],
-      },
     }),
   });
 
