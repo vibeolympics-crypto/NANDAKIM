@@ -1,30 +1,115 @@
 # AGENTS.md
-> Version: 2.0.0
-> Updated: 2025-12-20
+
+> Version: 2.1.0
+> Updated: 2025-12-23
 > Scope: Backend API (Express + Node 18)
 
 ---
 
 ## Module Context
-- Express server for content, media, email, social, adsense, contact, music APIs.
-- Uses environment validation, layered middleware (helmet, CORS, sanitization, rate limit, csrf), logging, and data directory initialization.
-- Data/config lives under server/data and server/config; avoid direct edits to production data without approval.
+
+Express server for content, media, email, social, adsense, contact, music APIs.
+Uses environment validation, layered middleware, logging, and data directory initialization.
+Data/config in server/data and server/config.
 
 ## Tech Stack & Constraints
-- Node >=18, ES modules.
-- Middlewares: helmetConfig, sanitizeAll, blockSqlInjection, apiRateLimiter, csrf, enforceHttps, timeout.
-- Logging: utils/logger.js; prefer structured logs over console.
-- Security: keep middleware order; do not bypass env validation (validateEnv) before boot.
-- Storage/queues: check config/redis.js or storage.js before adding dependencies.
+
+- Node >=18, ES modules
+- Express 5
+- Middleware: helmet, CORS, sanitization, rate limit, CSRF
+- Logging: utils/logger.js (structured logs)
+- Security: env validation required before boot
+
+## Directory Structure
+
+```
+server/
+  config/         # Configuration (Redis, storage, etc.)
+  data/           # Data files
+  docs/           # API documentation
+  lib/            # Shared libraries
+  middleware/     # Express middleware
+  routes/         # API route handlers
+  scripts/        # Migration, backup scripts
+  services/       # Business logic services
+  utils/          # Utility functions
+  index.js        # Server entry point
+```
 
 ## Implementation Patterns
-- Routes under server/routes: keep controllers thin, validate inputs, sanitize outputs.
-- Use parameterized queries and validation helpers; never trust raw input.
-- Health routes remain middleware-light and first.
-- When adding routes, wire through middleware chain and export via index if aggregating.
-- Maintain CSP and CORS allowlists; update allowedOrigins thoughtfully.
+
+### Route Structure
+
+```javascript
+// routes/{feature}.js
+import express from 'express';
+import { validateInput } from '../middleware/validation.js';
+import { featureService } from '../services/feature.js';
+
+const router = express.Router();
+
+router.get('/', async (req, res, next) => {
+  try {
+    const data = await featureService.getAll();
+    res.json({ success: true, data });
+  } catch (error) {
+    next(error);
+  }
+});
+
+export default router;
+```
+
+### Middleware Order
+
+```javascript
+// Critical order - do not change
+1. Health check (minimal middleware)
+2. Helmet (security headers)
+3. CORS configuration
+4. Rate limiting
+5. Body parsing
+6. Input sanitization
+7. CSRF protection
+8. Route handlers
+9. Error handler (last)
+```
+
+### Input Validation
+
+```javascript
+// Always validate and sanitize
+import { body, validationResult } from 'express-validator';
+
+router.post('/',
+  body('email').isEmail().normalizeEmail(),
+  body('name').trim().escape(),
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    // proceed
+  }
+);
+```
+
+### Error Handling
+
+```javascript
+// Use global error handler
+try {
+  // operation
+} catch (error) {
+  next(error); // forward to globalErrorHandler
+}
+
+// Never swallow errors
+// Always log via utils/logger.js
+```
 
 ## Commands
+
 ```bash
 SERVER_CMD=npm run server
 MIGRATE_UP=npm run migrate
@@ -34,19 +119,48 @@ BACKUP_CMD=npm run backup
 BACKUP_RESTORE=npm run backup:restore
 ```
 
-## Testing & Checks
-- Targeted server tests: npm run test -- server (or run full `npm run test:run`).
-- Integration/API: supertest-based specs in server/routes and services; run npm run test:run when touching backend.
-- Lint: npm run lint.
+## Testing Strategy
+
+- API tests: Supertest + Vitest
+- Run: `npm run test:run -- server`
+- Integration: Test full request/response cycle
+- Mock external services
 
 ## Local Golden Rules
-- No secrets or tokens committed; rely on process.env.
-- Keep request timeouts reasonable; avoid blocking operations on main thread.
-- Validate payload sizes and content types; sanitize all external-facing inputs.
-- Log and handle errors via globalErrorHandler; do not swallow errors silently.
 
-## Quick Validation (per backend change)
-1) npm run lint
-2) npm run test:run (or targeted server tests)
-3) npm run server (smoke)
-Stop after three failed retries and report blockers.
+Do:
+- Validate all inputs
+- Use parameterized queries
+- Log errors with context
+- Keep request timeouts reasonable
+- Close database connections properly
+- Use environment variables for config
+
+Don't:
+- Commit secrets or tokens
+- Trust raw user input
+- Bypass env validation
+- Block main thread
+- Swallow errors silently
+- Use external CORS proxies
+
+## Security Checklist
+
+- [ ] Helmet middleware active
+- [ ] CORS allowlist configured
+- [ ] Rate limiting enabled
+- [ ] CSRF protection on state-changing routes
+- [ ] Input sanitization applied
+- [ ] SQL injection prevention
+- [ ] No secrets in code
+
+## Quick Validation
+
+```bash
+npm run lint
+npm run test:run -- server
+npm run server  # smoke test
+curl http://localhost:3001/api/health
+```
+
+3 failures = stop and report.
