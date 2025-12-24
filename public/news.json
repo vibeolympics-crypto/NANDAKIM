@@ -1,0 +1,104 @@
+{
+  "news": [
+    {
+      "id": "ai-news-1",
+      "title": "OpenAI, GPT-5 개발 진행 중... 2025년 출시 예정",
+      "summary": "OpenAI가 차세대 대규모 언어 모델 GPT-5의 개발을 진행 중이라고 밝혔다. 기존 GPT-4보다 훨씬 향상된 추론 능력과 멀티모달 기능을 갖출 것으로 예상된다.",
+      "description": "OpenAI가 차세대 대규모 언어 모델 GPT-5의 개발을 진행 중이라고 밝혔다. 기존 GPT-4보다 훨씬 향상된 추론 능력과 멀티모달 기능을 갖출 것으로 예상된다.",
+      "source": "AI타임스",
+      "category": "AI",
+      "date": "2025-12-20T10:30:00.000Z",
+      "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=300&fit=crop&q=80",
+      "url": "https://www.aitimes.com"
+    },
+    {
+      "id": "ai-news-2",
+      "title": "구글, 제미나이 2.0 모델 공개... 멀티모달 성능 대폭 강화",
+      "summary": "구글이 차세대 AI 모델 제미나이 2.0을 공개했다. 텍스트, 이미지, 오디오, 비디오를 동시에 처리할 수 있는 진정한 멀티모달 모델로 평가받고 있다.",
+      "description": "구글이 차세대 AI 모델 제미나이 2.0을 공개했다. 텍스트, 이미지, 오디오, 비디오를 동시에 처리할 수 있는 진정한 멀티모달 모델로 평가받고 있다.",
+      "source": "ZDNet Korea",
+      "category": "AI",
+      "date": "2025-12-20T09:15:00.000Z",
+      "image": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=300&fit=crop&q=80",
+      "url": "https://zdnet.co.kr"
+    },
+    {
+      "id": "vibe-news-1",
+      "title": "GitHub Copilot X, 코드 생성을 넘어 전체 앱 개발 지원",
+      "summary": "GitHub이 AI 코딩 도우미 Copilot의 업그레이드 버전 Copilot X를 발표했다. 단순 코드 자동완성을 넘어 전체 애플리케이션 아키텍처 설계까지 지원한다.",
+      "description": "GitHub이 AI 코딩 도우미 Copilot의 업그레이드 버전 Copilot X를 발표했다. 단순 코드 자동완성을 넘어 전체 애플리케이션 아키텍처 설계까지 지원한다.",
+      "source": "블로터",
+      "category": "VIBE Coding",
+      "date": "2025-12-20T08:45:00.000Z",
+      "image": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=400&h=300&fit=crop&q=80",
+      "url": "https://www.bloter.net"
+    },
+    {
+      "id": "it-news-1",
+      "title": "클라우드 네이티브 개발, 2025년 소프트웨어 개발 트렌드 1위",
+      "summary": "가트너가 발표한 2025년 소프트웨어 개발 트렌드에서 클라우드 네이티브 개발이 1위를 차지했다. 컨테이너, 마이크로서비스, 서버리스 아키텍처가 핵심으로 꼽혔다.",
+      "description": "가트너가 발표한 2025년 소프트웨어 개발 트렌드에서 클라우드 네이티브 개발이 1위를 차지했다. 컨테이너, 마이크로서비스, 서버리스 아키텍처가 핵심으로 꼽혔다.",
+      "source": "ITWorld Korea",
+      "category": "IT",
+      "date": "2025-12-20T07:20:00.000Z",
+      "image": "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=400&h=300&fit=crop&q=80",
+      "url": "https://www.itworld.co.kr"
+    },
+    {
+      "id": "ai-news-3",
+      "title": "메타, 오픈소스 AI 모델 라마3 출시... 상업적 이용 가능",
+      "summary": "메타가 최신 오픈소스 대규모 언어 모델 라마3를 공개했다. 이전 버전보다 성능이 크게 향상되었으며 상업적 이용이 가능해 개발자들의 관심이 집중되고 있다.",
+      "description": "메타가 최신 오픈소스 대규模 언어 모델 라마3를 공개했다. 이전 버전보다 성능이 크게 향상되었으며 상업적 이용이 가능해 개발자들의 관심이 집중되고 있다.",
+      "source": "AI타임스",
+      "category": "AI",
+      "date": "2025-12-19T16:30:00.000Z",
+      "image": "https://images.unsplash.com/photo-1655393001768-d946c97d6fd1?w=400&h=300&fit=crop&q=80",
+      "url": "https://www.aitimes.com"
+    },
+    {
+      "id": "vibe-news-2",
+      "title": "Rust 언어, 리눅스 커널 공식 지원... 시스템 프로그래밍 새 시대",
+      "summary": "리눅스 커널이 공식적으로 Rust 언어 지원을 시작했다. 메모리 안정성이 뛰어난 Rust가 C언어와 함께 커널 개발에 사용될 수 있게 되면서 시스템 프로그래밍 패러다임이 변화하고 있다.",
+      "description": "리눅스 커널이 공식적으로 Rust 언어 지원을 시작했다. 메모리 안정성이 뛰어난 Rust가 C언어와 함께 커널 개발에 사용될 수 있게 되면서 시스템 프로그래밍 패러다임이 변화하고 있다.",
+      "source": "요즘IT",
+      "category": "VIBE Coding",
+      "date": "2025-12-19T15:10:00.000Z",
+      "image": "https://images.unsplash.com/photo-1629654291663-b91ad427698f?w=400&h=300&fit=crop&q=80",
+      "url": "https://yozm.wishket.com"
+    },
+    {
+      "id": "ai-news-4",
+      "title": "엔비디아, AI 전용 칩 H200 공개... 성능 2배 향상",
+      "summary": "엔비디아가 차세대 AI 전용 칩 H200을 공개했다. 기존 H100 대비 메모리 대역폭이 2배 향상되어 대규모 AI 모델 학습 속도가 크게 빨라질 전망이다.",
+      "description": "엔비디아가 차세대 AI 전용 칩 H200을 공개했다. 기존 H100 대비 메모리 대역폭이 2배 향상되어 대규모 AI 모델 학습 속도가 크게 빨라질 전망이다.",
+      "source": "ZDNet Korea",
+      "category": "AI",
+      "date": "2025-12-19T14:00:00.000Z",
+      "image": "https://images.unsplash.com/photo-1639322537228-f710d846310a?w=400&h=300&fit=crop&q=80",
+      "url": "https://zdnet.co.kr"
+    },
+    {
+      "id": "it-news-2",
+      "title": "웹어셈블리(WASM) 활용 확대... 브라우저 밖 서버까지",
+      "summary": "웹어셈블리가 브라우저를 넘어 서버 사이드, 엣지 컴퓨팅 영역으로 확장되고 있다. 경량화된 실행 환경과 빠른 속도로 컨테이너의 대안으로 주목받고 있다.",
+      "description": "웹어셈블리가 브라우저를 넘어 서버 사이드, 엣지 컴퓨팅 영역으로 확장되고 있다. 경량화된 실행 환경과 빠른 속도로 컨테이너의 대안으로 주목받고 있다.",
+      "source": "블로터",
+      "category": "IT",
+      "date": "2025-12-19T13:25:00.000Z",
+      "image": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=300&fit=crop&q=80",
+      "url": "https://www.bloter.net"
+    },
+    {
+      "id": "vibe-news-3",
+      "title": "Deno 2.0 출시... Node.js와 완전 호환",
+      "summary": "자바스크립트 런타임 Deno가 메이저 업데이트 2.0 버전을 출시했다. Node.js와 완전히 호환되면서도 향상된 보안성과 성능을 제공해 개발자들의 주목을 받고 있다.",
+      "description": "자바스크립트 런타임 Deno가 메이저 업데이트 2.0 버전을 출시했다. Node.js와 완전히 호환되면서도 향상된 보안성과 성능을 제공해 개발자들의 주목을 받고 있다.",
+      "source": "요즘IT",
+      "category": "VIBE Coding",
+      "date": "2025-12-19T11:50:00.000Z",
+      "image": "https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=400&h=300&fit=crop&q=80",
+      "url": "https://yozm.wishket.com"
+    }
+  ],
+  "lastUpdated": "2025-12-20T10:30:00.000Z"
+}

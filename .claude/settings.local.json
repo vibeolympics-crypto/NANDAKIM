@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(if [ -f .env ])",
+      "Bash(then echo \"exists\")",
+      "Bash(else echo \"not found\")",
+      "Bash(fi)",
+      "Bash(npm run build:*)",
+      "Bash(npm install)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat: Blog RSS 설정 추가 및 환경 변수 문서화\n\n- .env.example에 VITE_BLOG_RSS_URL 설정 추가\n- 네이버 블로그 RSS 피드 URL 형식 및 예시 문서화\n- Blog & Social 섹션에서 RSS 피드 정상 작동 지원\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push:*)",
+      "Bash(curl:*)",
+      "Bash(npm run server:*)",
+      "Bash(npm install:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfix: 서버 의존성 추가 및 API 엔드포인트 수정\n\n- Express 서버 실행에 필요한 의존성 추가\n  - express, express-rate-limit, helmet\n  - cookie-parser, cors, csrf-csrf\n  - bcrypt, dotenv, nodemailer, multer, xml2js\n- AI & VIBE News API 정상 작동 확인 (9개 카드 노출)\n- YouTube RSS 프록시 API 정상 작동 확인\n- Blog RSS 프록시 API 정상 작동 확인\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(cat:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat: AI & VIBE News 정적 JSON 데이터로 전환\n\n정적 사이트 배포 환경에서 백엔드 없이 작동하도록 개선\n\n변경 사항:\n- public/news.json 파일 생성 (9개 뉴스 카드 데이터)\n  - AI, IT, VIBE Coding 카테고리별 3개씩\n  - Unsplash 이미지 CDN 사용 (CORS 문제 없음)\n  - 실제 뉴스 사이트 링크 포함\n- useAIVibeNewsFeed 훅 수정\n  - /api/news/ai-vibe (백엔드) → /news.json (정적 파일)\n  - 정적 사이트 배포 환경 지원\n  - CORS 문제 해결\n\n이점:\n- 백엔드 서버 불필요\n- Cloudflare Pages 정적 배포 지원\n- 빠른 로딩 속도\n- 안정적인 작동\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(python -c:*)",
+      "Bash(npm run preview:*)",
+      "Bash(ls:*)",
+      "Bash(git reset:*)",
+      "Bash(git commit:*)",
+      "Bash(then cat .env)",
+      "Bash(else echo \".env file not found\")"
+    ]
+  }
+}

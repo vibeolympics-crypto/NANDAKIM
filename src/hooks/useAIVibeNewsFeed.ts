@@ -1,12 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import { NewsItem } from '@/lib/api';
 
-const API_ENDPOINT = '/api/news/ai-vibe';
+const NEWS_JSON_URL = '/news.json';
 const TOTAL_NEWS_LIMIT = 9;
 
 /**
- * AI & VIBE 뉴스 피드를 여러 RSS 소스에서 가져오는 훅
- * @param limit - 각 피드당 가져올 최대 뉴스 수
+ * AI & VIBE 뉴스 피드를 정적 JSON 파일에서 가져오는 훅
+ * 정적 사이트 배포를 위해 백엔드 API 대신 public/news.json 사용
+ * @param limit - 가져올 최대 뉴스 수 (기본값: 9)
  * @param refreshInterval - 자동 갱신 주기 (밀리초, 기본값: 30분)
  */
 export const useAIVibeNewsFeed = (limit: number = TOTAL_NEWS_LIMIT, refreshInterval: number = 30 * 60 * 1000) => {
@@ -26,13 +27,14 @@ export const useAIVibeNewsFeed = (limit: number = TOTAL_NEWS_LIMIT, refreshInter
       setLoading(true);
       setError(null);
 
-      const response = await fetchWithTimeout(`${API_ENDPOINT}?limit=${limit}`);
+      // 정적 JSON 파일에서 뉴스 로드
+      const response = await fetchWithTimeout(NEWS_JSON_URL);
       if (!response.ok) {
-        throw new Error(`뉴스 로드 실패: ${response.status}`);
+        throw new Error(`뉴스 파일 로드 실패: ${response.status}`);
       }
 
       const payload = await response.json();
-      const items: NewsItem[] = (payload?.news || []).slice(0, TOTAL_NEWS_LIMIT);
+      const items: NewsItem[] = (payload?.news || []).slice(0, limit);
 
       setNews(items);
       if (payload?.lastUpdated) {
