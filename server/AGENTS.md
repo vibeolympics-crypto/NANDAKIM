@@ -1,9 +1,7 @@
 # AGENTS.md
-> Version: 2.0.0
+> Version: 1.0.0
 > Updated: 2025-12-20
 > Scope: Backend API (Express + Node 18)
-
----
 
 ## Module Context
 - Express server for content, media, email, social, adsense, contact, music APIs.

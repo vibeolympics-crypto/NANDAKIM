@@ -1,0 +1,6 @@
+name = "notion-blog-feed"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+ALLOWED_ORIGINS = "https://nandakim.pages.dev,http://localhost:5173"

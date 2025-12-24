@@ -3,24 +3,9 @@ import Parser from 'rss-parser';
 import { logger } from '../utils/logger.js';
 
 const router = express.Router();
-const parser = new Parser({
-  timeout: 10000,
-  headers: {
-    'User-Agent': 'Mozilla/5.0 (compatible; PortfolioBot/1.0)',
-    'Accept': 'application/rss+xml, application/xml, text/xml, */*',
-  },
-  customFields: {
-    item: [
-      ['media:content', 'mediaContent', { keepArray: true }],
-      ['media:thumbnail', 'mediaThumbnail'],
-      ['enclosure', 'enclosure'],
-    ],
-  },
-});
+const parser = new Parser({ timeout: 8000 });
 
 const MAX_ITEMS = 9;
-
-// Korean AI/IT/VIBE Coding news sources
 const SOURCES = [
   {
     url: 'https://www.aitimes.com/rss/allArticle.xml',
@@ -35,16 +20,6 @@ const SOURCES = [
   {
     url: 'https://www.bloter.net/feed',
     name: '블로터',
-    category: 'VIBE Coding',
-  },
-  {
-    url: 'https://www.itworld.co.kr/rss/feed.xml',
-    name: 'ITWorld Korea',
-    category: 'AI',
-  },
-  {
-    url: 'https://yozm.wishket.com/magazine/list/develop/feed/',
-    name: '요즘IT',
     category: 'VIBE Coding',
   },
 ];

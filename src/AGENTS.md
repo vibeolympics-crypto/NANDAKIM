@@ -1,9 +1,7 @@
 # AGENTS.md
-> Version: 2.0.0
+> Version: 1.0.0
 > Updated: 2025-12-20
 > Scope: Frontend (React + Vite + TypeScript)
-
----
 
 ## Module Context
 - Vite + React 18 SPA using Tailwind, shadcn/ui patterns, lucide icons, TanStack Query, React Router.
@@ -34,7 +32,6 @@
 - Keep CSS animations and gradients performant (prefer transform/opacity).
 - When consuming JSON (e.g., projects), guard against missing fields and validate before render.
 - Avoid direct `window` access in SSR-able utilities; isolate to effects or event handlers only.
-- Never use external CORS proxies; use server/routes/proxy or proper backend API.
 
 ## Quick Validation (per change)
 1) npm run lint
