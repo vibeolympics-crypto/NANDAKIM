@@ -1,4 +1,4 @@
-name = "notion-blog-feed"
+name = "nandakim-blog"
 main = "worker.js"
 compatibility_date = "2024-01-01"
 account_id = "d2254b21d37a99ea4a790a27691e548b"
