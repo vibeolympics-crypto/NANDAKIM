@@ -1,16 +1,12 @@
 name = "notion-blog-feed"
 main = "worker.js"
 compatibility_date = "2024-01-01"
+account_id = "d2254b21d37a99ea4a790a27691e548b"
+workers_dev = true
 
 # 환경 변수 (Cloudflare Dashboard에서 Secrets로 설정)
 # NOTION_API_KEY = "secret_xxx" (Secrets에서 설정)
 # NOTION_DATABASE_ID = "xxx" (Secrets에서 설정)
 
 [vars]
-ALLOWED_ORIGINS = "http://localhost:5173,http://localhost:3000"
-
-# 프로덕션 환경
-[env.production]
-name = "notion-blog-feed"
-[env.production.vars]
-ALLOWED_ORIGINS = "https://your-domain.com,https://www.your-domain.com"
+ALLOWED_ORIGINS = "http://localhost:5173,http://localhost:3000,https://nandakim.pages.dev"
