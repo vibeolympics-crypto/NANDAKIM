@@ -97,6 +97,7 @@ export const AboutSection = () => {
     'ESG 경영평가사',
     'ESG 인증평가사',
     'ESG 경영지도자 Lv.Ⅱ',
+    'AICE Future',
     '정보보안전문가',
     '프롬프트엔지니어',
     '전자계산기기능사',
