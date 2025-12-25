@@ -60,13 +60,13 @@ export function BlogTimelineSection({ posts, onPostClick }: BlogTimelineSectionP
   };
 
   const handlePostClick = (post: BlogPost) => {
-    // RSS 피드 게시물인 경우 (id가 'blog-rss-'로 시작) - 외부 링크로 열기
-    if (post.id.startsWith('blog-rss-') && post.url && post.url !== '#') {
+    // URL이 있는 경우 (노션 블로그, RSS 피드 등) - 외부 링크로 열기
+    if (post.url && post.url !== '#') {
       window.open(post.url, '_blank', 'noopener,noreferrer');
       return;
     }
-    
-    // 로컬 블로그 게시물인 경우 - onPostClick 콜백 사용
+
+    // URL이 없는 로컬 블로그 게시물인 경우 - onPostClick 콜백 사용
     if (onPostClick) {
       onPostClick(post.id);
     }
