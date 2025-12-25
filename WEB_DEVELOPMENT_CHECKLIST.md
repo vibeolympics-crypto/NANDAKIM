@@ -1,380 +1,121 @@
-# Web Development Full Checklist
+# Full Checklist
 
-> Version: 2.1.0
-> Updated: 2025-12-23
-> Purpose: Pre-deploy/PR merge validation (30-60 min)
-> Scope: React (Vite) + Express + TypeScript
+> v2.2 | 배포/PR 전 30-60분 검증
 
----
-
-## When to Use
-
-- Before production deploy
-- Before PR merge to main
-- Before major release
-- After significant refactoring
-
----
-
-## 1. Build & Type Safety
-
-### Build Verification
+## 1. Build & Type
 
 ```bash
 npm run build
-```
-
-- [ ] Build completes without errors
-- [ ] Output size reasonable (check dist/)
-- [ ] No unexpected warnings
-
-### Type Check
-
-```bash
 npx tsc --noEmit
-```
-
-- [ ] Zero type errors
-- [ ] No implicit `any` in new code
-- [ ] Generic types properly constrained
-
-### Lint Check
-
-```bash
 npm run lint
 ```
 
-- [ ] Zero lint errors
-- [ ] Warnings reviewed and justified
+- [ ] 빌드 성공
+- [ ] 타입 에러 0
+- [ ] 린트 에러 0
 
----
-
-## 2. Testing Suite
-
-### Unit Tests
+## 2. Testing
 
 ```bash
 npm run test:run
-```
-
-- [ ] All tests pass
-- [ ] New features have tests
-- [ ] Edge cases covered
-
-### Coverage (if required)
-
-```bash
 npm run test:coverage
-```
-
-- [ ] Coverage meets threshold
-- [ ] Critical paths covered
-- [ ] No untested business logic
-
-### E2E Tests
-
-```bash
 npm run test:e2e
 ```
 
-- [ ] All E2E tests pass
-- [ ] User flows validated
-- [ ] Cross-browser scenarios covered
+- [ ] 단위 테스트 통과
+- [ ] E2E 테스트 통과
+- [ ] 커버리지 충족
 
----
-
-## 3. Security Audit
-
-### Automated Check
+## 3. Security
 
 ```bash
 npm run security:check
 npm audit
 ```
 
-- [ ] No high/critical vulnerabilities
-- [ ] Known vulnerabilities documented
-
-### Manual Check
-
-- [ ] No hardcoded secrets in code
-- [ ] No secrets in git history
-- [ ] Environment variables properly used
-- [ ] API keys use placeholders in examples
-
-### Frontend Security
-
-- [ ] No external CORS proxies
-- [ ] XSS prevention (no raw innerHTML)
-- [ ] CSRF tokens used where needed
-- [ ] Sensitive data not in localStorage
-
-### Backend Security
-
-- [ ] Input validation on all endpoints
-- [ ] SQL injection prevention (parameterized queries)
-- [ ] Rate limiting configured
-- [ ] Helmet middleware active
-- [ ] CORS properly configured
-
----
+- [ ] 취약점 없음
+- [ ] 하드코딩 비밀 없음
+- [ ] 외부 CORS 프록시 미사용
+- [ ] XSS/CSRF 방지
+- [ ] Rate limiting 활성
 
 ## 4. Performance
 
-### Lighthouse Audit
-
 ```bash
 npm run lighthouse
-```
-
-Target scores:
-- [ ] Performance: 90+
-- [ ] Accessibility: 90+
-- [ ] Best Practices: 90+
-- [ ] SEO: 90+
-
-### Bundle Analysis
-
-```bash
 npm run bundle:analyze
 ```
 
-- [ ] No unexpected large dependencies
-- [ ] Code splitting effective
-- [ ] Tree shaking working
-
-### Core Web Vitals
-
+- [ ] Lighthouse 90+
 - [ ] LCP < 2.5s
-- [ ] FID < 100ms
 - [ ] CLS < 0.1
+- [ ] 번들 크기 적정
 
-### Resource Optimization
-
-- [ ] Images optimized (WebP/AVIF where possible)
-- [ ] Fonts subset and preloaded
-- [ ] CSS purged of unused styles
-- [ ] JavaScript minified
-
----
-
-## 5. Accessibility (a11y)
-
-### Automated
+## 5. Accessibility
 
 ```bash
 npm run test:accessibility
 ```
 
-- [ ] No WCAG 2.1 AA violations
+- [ ] 키보드 네비게이션
+- [ ] ARIA 라벨
+- [ ] 색상 대비
 
-### Manual Check
-
-- [ ] Keyboard navigation works
-- [ ] Focus states visible
-- [ ] Skip links present
-- [ ] ARIA labels appropriate
-- [ ] Color contrast sufficient
-- [ ] Screen reader tested
-
-### Form Accessibility
-
-- [ ] Labels associated with inputs
-- [ ] Error messages accessible
-- [ ] Required fields indicated
-- [ ] Autocomplete attributes set
-
----
-
-## 6. Cross-Browser & Device
-
-### Browser Testing
+## 6. Cross-Browser
 
 ```bash
 npm run test:cross-browser
-```
-
-- [ ] Chrome (latest)
-- [ ] Firefox (latest)
-- [ ] Safari (latest)
-- [ ] Edge (latest)
-
-### Device Testing
-
-```bash
 npm run test:devices
 ```
 
-- [ ] Desktop (1920x1080, 1366x768)
-- [ ] Tablet (768x1024)
-- [ ] Mobile (375x667, 414x896)
+- [ ] Chrome/Firefox/Safari/Edge
+- [ ] Desktop/Tablet/Mobile
 
-### Responsive Breakpoints
-
-- [ ] sm (640px)
-- [ ] md (768px)
-- [ ] lg (1024px)
-- [ ] xl (1280px)
-- [ ] 2xl (1536px)
-
----
-
-## 7. API & Backend
-
-### Endpoint Verification
-
-- [ ] All routes respond correctly
-- [ ] Error responses consistent
-- [ ] Status codes appropriate
-- [ ] Response times acceptable
-
-### Database (if applicable)
-
-- [ ] Migrations up to date
-- [ ] Indexes optimized
-- [ ] Connections properly closed
-- [ ] Backup/restore tested
-
-### Server Health
+## 7. Backend
 
 ```bash
 npm run server
-# Then test health endpoint
-curl http://localhost:3001/api/health
+curl localhost:3001/api/health
 ```
 
-- [ ] Server starts cleanly
-- [ ] Health check passes
-- [ ] Graceful shutdown works
+- [ ] 서버 정상 시작
+- [ ] API 응답 정상
+- [ ] 미들웨어 순서 정확
 
----
+## 8. Git
 
-## 8. Documentation
+- [ ] 커밋 메시지 컨벤션
+- [ ] 민감 데이터 미포함
+- [ ] main과 충돌 없음
 
-- [ ] README up to date
-- [ ] API documentation current
-- [ ] Environment variables documented
-- [ ] Breaking changes noted
-- [ ] Changelog updated
+## 9. Deploy
 
----
+- [ ] Staging 테스트 완료
+- [ ] 롤백 계획 준비
+- [ ] 환경 변수 확인
 
-## 9. Git & Version Control
-
-### Branch State
-
-- [ ] All commits meaningful
-- [ ] No merge conflicts
-- [ ] Branch up to date with main
-
-### Commit Quality
-
-- [ ] Commit messages follow convention
-- [ ] No sensitive data committed
-- [ ] No large binary files
-
-### PR Readiness
-
-- [ ] Description complete
-- [ ] Related issues linked
-- [ ] Reviewers assigned
-- [ ] CI checks passing
-
----
-
-## 10. Deployment Readiness
-
-### Environment Configuration
-
-- [ ] Production env vars documented
-- [ ] Staging tested successfully
-- [ ] Rollback plan exists
-
-### Infrastructure
-
-- [ ] CDN configured
-- [ ] SSL certificates valid
-- [ ] DNS properly configured
-- [ ] Monitoring active
-
-### Post-Deploy Plan
-
-- [ ] Smoke test checklist ready
-- [ ] Monitoring alerts configured
-- [ ] Support team notified
-
----
-
-## Failure Recovery Protocol
+## Retry Protocol
 
 ```
-1st fail: Analyze -> Fix specific issue
-2nd fail: Review approach -> Alternative solution
-3rd fail: STOP -> Report with details
+1차 실패 → 분석 → 수정
+2차 실패 → 접근 변경
+3차 실패 → 중단 + 보고
 
-Report format:
-[FULL-BLOCKED] {section}
-- Item: {failed check}
-- Symptom: {what happened}
-- Attempts: {solutions tried}
-- Impact: {deployment risk}
-- Required: {user decision}
+[FULL-BLOCKED] {섹션}
+- 항목: {실패}
+- 시도: {방법}
+- 영향: {위험도}
+- 필요: {결정}
 ```
 
----
-
-## Pre-Deploy Final Checklist
-
-```
-Build & Types:
-[ ] npm run build - success
-[ ] npx tsc --noEmit - pass
-[ ] npm run lint - clean
-
-Testing:
-[ ] npm run test:run - all pass
-[ ] npm run test:e2e - all pass
-
-Security:
-[ ] npm audit - no critical
-[ ] No hardcoded secrets
-
-Performance:
-[ ] Lighthouse 90+ all categories
-[ ] Bundle size acceptable
-
-Final:
-[ ] Staging tested
-[ ] Rollback plan ready
-[ ] Team notified
-
-All pass -> Deploy allowed
-Any critical fail -> Resolve first
-```
-
----
-
-## Quick Commands Reference
+## Quick Commands
 
 ```bash
-# Full validation sequence
-npm run build
-npx tsc --noEmit
-npm run lint
-npm run test:run
-npm run test:e2e
-npm run security:check
-npm run lighthouse
-
-# Backend validation
-npm run server
-npm run migrate:status
-
-# Performance check
-npm run bundle:analyze
-npm run perf:full
+# Full validation
+npm run build && npx tsc --noEmit && npm run lint
+npm run test:run && npm run test:e2e
+npm run security:check && npm run lighthouse
 ```
 
 ---
-
-**Quick Check Only?** See WEB_CHECKLIST_QUICK.md
+**Quick 검증만?** → WEB_CHECKLIST_QUICK.md

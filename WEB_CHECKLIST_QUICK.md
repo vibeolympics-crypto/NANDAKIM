@@ -1,275 +1,65 @@
-# Web Development Quick Checklist
+# Quick Checklist
 
-> Version: 2.1.0
-> Updated: 2025-12-23
-> Purpose: Post-task validation (5-10 min)
-> Scope: React (Vite) + Express + TypeScript
+> v2.2 | 5-10분 검증
 
----
-
-## Scope Declaration
-
-This checklist applies to the Portfolio monorepo (frontend + backend).
-Project-specific commands defined in AGENTS.md Operational Commands section.
-
----
-
-## 0. Pre-Check
-
-Validate before starting to prevent token waste.
-
-- [ ] Requirements clearly defined
-- [ ] Target files/scope identified
-- [ ] Existing patterns checked
-
-If unclear: Ask questions before work.
-
----
-
-## 1. Build Verification
-
-### Commands
-
-| Check | Command |
-|-------|---------|
-| Build | `npm run build` |
-| Type Check | `npx tsc --noEmit` |
-| Lint | `npm run lint` |
-
-- [ ] Build success (0 errors)
-- [ ] Type check pass
-- [ ] Critical warnings reviewed
-
-### Failure Protocol
-
-```
-1st fail: Check error message -> Fix target line
-2nd fail: Check imports/dependencies -> Fix path/version
-3rd fail: STOP -> Report to user
-```
-
----
-
-## 2. Code Conflict Check
-
-- [ ] New code does not break existing features
-- [ ] Import/require paths correct
-- [ ] No function/variable name collisions
-- [ ] No circular references
-
-### Quick Verification
+## 필수 명령어
 
 ```bash
-# Circular reference check
-npx madge --circular src/
-
-# TypeScript import test
-npx tsc --noEmit
+npm run build && npx tsc --noEmit && npm run lint
 ```
 
----
+## 체크리스트
 
-## 3. React/TypeScript Rules
+### Build
+- [ ] 빌드 성공 (에러 0)
+- [ ] 타입 체크 통과
+- [ ] 린트 에러 없음
 
-### Hooks
+### Code
+- [ ] 기존 기능 정상
+- [ ] import 경로 정확
+- [ ] 순환 참조 없음 (`npx madge --circular src/`)
 
-- [ ] Hooks called at component top level only
-- [ ] No hooks inside conditionals/loops
-- [ ] Dependency arrays correctly specified
-- [ ] Cleanup logic implemented in useEffect
+### React
+- [ ] Hook 최상위 호출
+- [ ] 의존성 배열 정확
+- [ ] cleanup 구현
 
-```typescript
-// Correct Pattern
-useEffect(() => {
-  const subscription = subscribe();
-  return () => subscription.unsubscribe();  // cleanup
-}, [dependency]);  // dependencies explicit
-```
+### Style
+- [ ] 레이아웃 정상
+- [ ] 반응형 동작
+- [ ] z-index 충돌 없음
 
-### Components
+### API
+- [ ] 엔드포인트 정확
+- [ ] 에러 처리 구현
+- [ ] 외부 CORS 프록시 미사용
 
-- [ ] Props typed (no `any` abuse)
-- [ ] Single responsibility maintained
-- [ ] Event handlers properly bound
+### Security
+- [ ] API 키 하드코딩 없음
+- [ ] console.log 민감정보 없음
+- [ ] XSS 취약점 없음
 
-### TanStack Query
-
-- [ ] Query keys unique and consistent
-- [ ] Error/loading states handled
-- [ ] Stale time configured appropriately
-
----
-
-## 4. Style & Layout
-
-- [ ] Layout renders correctly
-- [ ] Responsive behavior verified (mobile/desktop)
-- [ ] No z-index conflicts
-- [ ] No unintended overflow clipping
-- [ ] Scroll behavior normal
-
-### Tailwind Specifics
-
-- [ ] Utility classes follow project conventions
-- [ ] No conflicting responsive breakpoints
-- [ ] Dark mode variants work (if applicable)
-
-### Common Issues
-
-| Symptom | Check First |
-|---------|-------------|
-| Element invisible | z-index, display, visibility |
-| Layout broken | flex/grid props, parent size |
-| Scroll issues | overflow, position settings |
-
----
-
-## 5. Media Resources
-
-- [ ] Image paths valid
-- [ ] Image alt attributes present
-- [ ] Audio/video playback works
-- [ ] Media controls functional
-
-### Checklist by Type
-
-```
-Image:  path OK | alt OK | lazy loading OK
-Audio:  path OK | controls OK | state managed OK
-Video:  path OK | controls OK | autoplay+muted OK
-Font:   path OK | fallback OK | display:swap OK
-```
-
----
-
-## 6. API & Network
-
-### Frontend (React)
-
-- [ ] API endpoints correct
-- [ ] HTTP methods appropriate (GET/POST/PUT/DELETE)
-- [ ] Error handling implemented
-- [ ] Loading state displayed
-- [ ] Timeout handling exists
-
-### Backend (Express)
-
-- [ ] Route path correct
-- [ ] Middleware order maintained
-- [ ] Input validation present
-- [ ] Response sanitized
-
-### Security Check
-
-- [ ] No external CORS proxies used
-- [ ] API keys not exposed to client
-- [ ] Sensitive data not logged
-
-```javascript
-// Bad: External proxy
-fetch('https://cors-anywhere.herokuapp.com/...')
-
-// Good: Self-hosted proxy
-fetch('/api/proxy?url=...')
-```
-
----
-
-## 7. Security Minimum
-
-- [ ] No hardcoded API keys/tokens
-- [ ] No sensitive info in console.log
-- [ ] User input validation exists
-- [ ] No XSS vulnerable code (innerHTML caution)
-
-```javascript
-// Bad: XSS vulnerable
-element.innerHTML = userInput;
-
-// Good: Safe method
-element.textContent = userInput;
-// Or use DOMPurify
-```
-
----
-
-## 8. Final Verification
-
-### Development Server
-
-| Stack | Command |
-|-------|---------|
-| Frontend | `npm run dev` |
-| Backend | `npm run server` |
-| Full | `npm run dev:full` |
-
-- [ ] Dev server runs successfully
-- [ ] New feature works correctly
-- [ ] Existing features unaffected
-- [ ] No console errors (warnings reviewed)
-
-### Backend-Specific (if touched)
-
-- [ ] Server starts without errors
-- [ ] API endpoints respond correctly
-- [ ] Middleware chain functions properly
-
----
-
-## 9. Commit Ready
-
-- [ ] Unused imports removed
-- [ ] Unused variables/functions removed
-- [ ] Debug console.log removed
-- [ ] Commented code cleaned
-- [ ] TODO comments reviewed
-
----
-
-## Troubleshooting Quick Reference
-
-| Symptom | 1st Check | 2nd Check |
-|---------|-----------|-----------|
-| White screen | Console errors | Import paths |
-| Style broken | CSS loaded | Class name conflicts |
-| API failure | Network tab | CORS settings |
-| Infinite render | Dependency array | State update logic |
-| Build failure | Type errors | Dependency versions |
-| Server crash | Env validation | Middleware order |
-
----
+### Commit
+- [ ] 미사용 import 제거
+- [ ] debug console.log 제거
+- [ ] 주석 코드 정리
 
 ## Retry Protocol
 
 ```
-1st fail -> Analyze error -> Fix
-2nd fail -> Change approach
-3rd fail -> STOP + Report
+1차 실패 → 원인 분석 → 수정
+2차 실패 → 접근 변경
+3차 실패 → 중단 + 보고
+```
 
-Report format:
-[QUICK-BLOCKED] {item}
-- Symptom: {what happened}
-- Attempts: {methods tried}
-- Required: {user decision request}
+## 서버 테스트
+
+```bash
+npm run dev       # Frontend
+npm run server    # Backend
+npm run dev:full  # Both
 ```
 
 ---
-
-## Completion Checklist
-
-```
-[ ] npm run build - success
-[ ] npx tsc --noEmit - pass
-[ ] npm run lint - no errors
-[ ] New feature works
-[ ] Existing features OK
-[ ] Console errors: none
-
-All pass -> Commit allowed
-Any fail -> Fix -> Revalidate
-3rd fail -> STOP + Report
-```
-
----
-
-**Full Review Required?** See WEB_DEVELOPMENT_CHECKLIST.md
+**Full 검증?** → WEB_DEVELOPMENT_CHECKLIST.md

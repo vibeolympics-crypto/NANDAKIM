@@ -27,3 +27,20 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Build artifacts
+.wrangler/
+*.tsbuildinfo
+
+# Backups (should not be in version control)
+src/data/backups/
+backups/
+
+# Test outputs
+coverage/
+playwright-report/
+test-results/
+
+# Performance reports
+lighthouse-report/
+*.lighthouse.html
