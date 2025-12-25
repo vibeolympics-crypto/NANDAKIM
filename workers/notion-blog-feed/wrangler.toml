@@ -9,4 +9,10 @@ workers_dev = true
 # NOTION_DATABASE_ID = "xxx" (Secrets에서 설정)
 
 [vars]
-ALLOWED_ORIGINS = "http://localhost:5173,http://localhost:3000,https://nandakim.pages.dev"
+ALLOWED_ORIGINS = "https://nandakim.pages.dev,http://localhost:5173,http://localhost:3000"
+
+# 프로덕션 환경
+[env.production]
+name = "notion-blog-feed"
+[env.production.vars]
+ALLOWED_ORIGINS = "https://nandakim.pages.dev"
