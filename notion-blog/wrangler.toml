@@ -1,0 +1,8 @@
+name = "nandakim-blog"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+account_id = "d2254b21d37a99ea4a790a27691e548b"
+workers_dev = true
+
+[vars]
+ALLOWED_ORIGINS = "https://nandakim.pages.dev,http://localhost:5173"

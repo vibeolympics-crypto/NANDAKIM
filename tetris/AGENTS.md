@@ -1,10 +1,14 @@
 # AGENTS.md
+<<<<<<< HEAD
+> Version: 1.0.0
+> Updated: 2025-12-20
+> Scope: Tetris mini-app (Vite + TypeScript)
+=======
 
 > Version: 2.1.0
 > Updated: 2025-12-23
 > Scope: Tetris Mini-App (Vite + TypeScript)
-
----
+>>>>>>> a1022dce76276ca1607477df1bd33594e131df72
 
 ## Module Context
 

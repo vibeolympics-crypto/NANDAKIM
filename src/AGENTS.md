@@ -1,10 +1,13 @@
 # AGENTS.md
+<<<<<<< HEAD
+> Version: 1.0.0
+> Updated: 2025-12-20
+=======
 
 > Version: 2.1.0
 > Updated: 2025-12-23
+>>>>>>> a1022dce76276ca1607477df1bd33594e131df72
 > Scope: Frontend (React + Vite + TypeScript)
-
----
 
 ## Module Context
 
@@ -99,6 +102,13 @@ E2E_CMD=npm run test:e2e
 - Accessibility: jest-axe
 
 ## Local Golden Rules
+<<<<<<< HEAD
+- No console logs or unused code in commits; clean unused imports.
+- Keep CSS animations and gradients performant (prefer transform/opacity).
+- When consuming JSON (e.g., projects), guard against missing fields and validate before render.
+- Avoid direct `window` access in SSR-able utilities; isolate to effects or event handlers only.
+=======
+>>>>>>> a1022dce76276ca1607477df1bd33594e131df72
 
 Do:
 - Type all props and state

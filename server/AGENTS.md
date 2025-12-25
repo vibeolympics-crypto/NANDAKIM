@@ -1,10 +1,13 @@
 # AGENTS.md
+<<<<<<< HEAD
+> Version: 1.0.0
+> Updated: 2025-12-20
+=======
 
 > Version: 2.1.0
 > Updated: 2025-12-23
+>>>>>>> a1022dce76276ca1607477df1bd33594e131df72
 > Scope: Backend API (Express + Node 18)
-
----
 
 ## Module Context
 

@@ -48,8 +48,8 @@ interface MapSettings {
   provider: 'google' | 'kakao';
 }
 
-// 네이버 블로그 RSS URL - 환경 변수에서 로드 (폴백: 빈 문자열)
-const NAVER_BLOG_RSS_URL = import.meta.env.VITE_BLOG_RSS_URL || '';
+// Notion Blog API를 통한 블로그 피드 (Cloudflare Worker)
+// RSS는 fallback으로만 사용됨
 
 const Index = () => {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
@@ -61,10 +61,10 @@ const Index = () => {
     provider: 'google',
   });
 
-  // RSS 피드 호출 - 안정성 개선: 오류 시에도 블로그 데이터는 표시됨
-  const { posts: rssPosts, loading: rssBlogLoading, error: rssBlogError } = useRssFeed(NAVER_BLOG_RSS_URL, 10);
+  // Notion Blog Feed 호출 (첫 번째 파라미터는 하위 호환성 용도로 무시됨)
+  const { posts: rssPosts, loading: rssBlogLoading, error: rssBlogError } = useRssFeed('', 10);
 
-  // RSS 피드가 있으면 RSS 데이터, 없으면 로컬 블로그 데이터 사용
+  // 블로그 포스트 사용
   const combinedBlogPosts = rssPosts.length > 0 ? rssPosts : blogData.posts || [];
 
   return (

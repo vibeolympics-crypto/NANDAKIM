@@ -4,6 +4,10 @@
 > Updated: 2025-12-23
 > Compatibility: React (Vite) / Express / TypeScript / Node 18+
 
+<<<<<<< HEAD
+## Role
+Portfolio monorepo control tower for frontend (src), backend API (server), and mini-app (tetris). Centralize governance; delegate specifics to nested AGENTS.
+=======
 ---
 
 # Role
@@ -56,6 +60,7 @@ Pre-work checklist:
 ---
 
 # Project Context & Operations
+>>>>>>> a1022dce76276ca1607477df1bd33594e131df72
 
 ## Tech Stack Declaration
 
@@ -97,6 +102,34 @@ VERIFY_CMD=npm run verify:all
 SECURITY_CMD=npm run security:check
 ```
 
+<<<<<<< HEAD
+## Token Efficiency & Retry
+- Validate requirements first; reuse existing patterns; understand impact before edits.
+- Retry limit: three attempts max. On third failure, stop and report causes and options.
+- Scope discipline: touch only requested areas; no broad refactors without approval.
+
+## Golden Rules (Immutable)
+- Never hardcode secrets or edit .env*. Avoid committing secrets.
+- Do not touch node_modules, .git, build outputs, or production data.
+- Follow TypeScript typing; avoid `any` unless justified.
+- Keep prod code free of debug logs; use structured logger utilities where provided.
+- Preserve accessibility (ARIA), security headers, and middleware order.
+
+## Validation Flow
+- Quick check (default): npm run verify:integrity, npm run lint, npm run test:run, npm run preview (build smoke), npm run server (only if backend touched).
+- Full check (before release/PR): Quick check + npm run test:e2e, npm run coverage, npm run lighthouse:verify.
+- If a step fails, analyze, fix, retry. After three failed attempts, stop and report.
+
+## Context Map
+- Frontend/UI: see src/AGENTS.md
+- Backend/API: see server/AGENTS.md
+- Mini-app (Tetris): see tetris/AGENTS.md
+
+## Change Management
+- Branch naming: feature/{name}, fix/{issue}, chore/{task}.
+- Commits: concise prefixes (feat/fix/refactor/docs/test/chore/style).
+- Keep files under 500 lines here; no emojis; concise actionable language only.
+=======
 ---
 
 # Golden Rules
@@ -307,3 +340,4 @@ After work:
 4. **Scope Discipline**: Modify only requested areas
 5. **Retry Limit**: 3 failures = stop and report
 6. **Validation Required**: Quick validation after every task
+>>>>>>> a1022dce76276ca1607477df1bd33594e131df72

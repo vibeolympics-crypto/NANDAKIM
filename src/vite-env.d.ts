@@ -5,6 +5,7 @@ interface ImportMetaEnv {
   readonly VITE_API_BASE_URL?: string;
   
   // 블로그/RSS 설정
+  readonly VITE_NOTION_BLOG_API_URL?: string;
   readonly VITE_BLOG_RSS_URL?: string;
   readonly VITE_BLOG_YOUTUBE_CHANNEL?: string;
   

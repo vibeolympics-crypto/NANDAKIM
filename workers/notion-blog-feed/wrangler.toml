@@ -1,6 +1,8 @@
 name = "notion-blog-feed"
 main = "worker.js"
 compatibility_date = "2024-01-01"
+account_id = "d2254b21d37a99ea4a790a27691e548b"
+workers_dev = true
 
 # 환경 변수 (Cloudflare Dashboard에서 Secrets로 설정)
 # NOTION_API_KEY = "secret_xxx" (Secrets에서 설정)
