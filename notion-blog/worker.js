@@ -2,6 +2,7 @@
  * Integrated Notion Worker
  * - GET / or /blog → Blog posts from Notion
  * - POST /contact → Save contact form to Notion
+ * - GET /health → Health check
  */
 
 const NOTION_API_VERSION = '2022-06-28';
@@ -86,14 +87,14 @@ function transformNotionPage(page) {
 }
 
 async function queryBlogDatabase(env, limit = 10) {
-  const databaseId = env.NOTION_BLOG_DATABASE_ID || env.NOTION_DATABASE_ID;
+  const databaseId = env.NOTION_BLOG_DATABASE_ID;
 
   const response = await fetch(`${NOTION_API_BASE}/databases/${databaseId}/query`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${env.NOTION_API_KEY}`,
       'Notion-Version': NOTION_API_VERSION,
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json; charset=utf-8',
     },
     body: JSON.stringify({
       page_size: limit,
@@ -122,14 +123,14 @@ async function handleBlogRequest(request, env) {
 
 async function createContactPage(env, data) {
   const { name, email, subject, message } = data;
-  const databaseId = env.NOTION_CONTACT_DATABASE_ID || env.NOTION_DATABASE_ID;
+  const databaseId = env.NOTION_CONTACT_DATABASE_ID;
 
   const response = await fetch(`${NOTION_API_BASE}/pages`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${env.NOTION_API_KEY}`,
       'Notion-Version': NOTION_API_VERSION,
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json; charset=utf-8',
     },
     body: JSON.stringify({
       parent: { database_id: databaseId },
@@ -138,7 +139,6 @@ async function createContactPage(env, data) {
         'Email': { email: email || '' },
         'Subject': { rich_text: [{ text: { content: subject || 'No Subject' } }] },
         'Message': { rich_text: [{ text: { content: message || '' } }] },
-        'Status': { select: { name: 'New' } },
         'Date': { date: { start: new Date().toISOString().split('T')[0] } }
       }
     }),
@@ -183,7 +183,7 @@ export default {
         hasBlogDb: !!env.NOTION_BLOG_DATABASE_ID,
         hasContactDb: !!env.NOTION_CONTACT_DATABASE_ID
       }), {
-        headers: { 'Content-Type': 'application/json', ...corsHeaders }
+        headers: { 'Content-Type': 'application/json; charset=utf-8', ...corsHeaders }
       });
     }
 
@@ -197,7 +197,7 @@ export default {
 
       // Route: POST /contact → Contact Form
       if (request.method === 'POST' && (path === '/contact' || path === '/')) {
-        if (!env.NOTION_CONTACT_DATABASE_ID && !env.NOTION_DATABASE_ID) {
+        if (!env.NOTION_CONTACT_DATABASE_ID) {
           throw new Error('Missing NOTION_CONTACT_DATABASE_ID');
         }
         result = await handleContactRequest(request, env);
@@ -205,13 +205,13 @@ export default {
         if (result.status === 400) {
           return new Response(JSON.stringify(result), {
             status: 400,
-            headers: { 'Content-Type': 'application/json', ...corsHeaders },
+            headers: { 'Content-Type': 'application/json; charset=utf-8', ...corsHeaders },
           });
         }
       }
       // Route: GET / or /blog → Blog Posts
       else if (request.method === 'GET') {
-        if (!env.NOTION_BLOG_DATABASE_ID && !env.NOTION_DATABASE_ID) {
+        if (!env.NOTION_BLOG_DATABASE_ID) {
           throw new Error('Missing NOTION_BLOG_DATABASE_ID');
         }
         result = await handleBlogRequest(request, env);
@@ -220,7 +220,7 @@ export default {
       else {
         return new Response(JSON.stringify({ error: 'Method not allowed' }), {
           status: 405,
-          headers: { 'Content-Type': 'application/json', ...corsHeaders },
+          headers: { 'Content-Type': 'application/json; charset=utf-8', ...corsHeaders },
         });
       }
 
