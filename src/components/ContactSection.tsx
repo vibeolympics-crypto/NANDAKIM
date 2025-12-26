@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, Twitter, Instagram, Youtube, Github } from 'lucide-react';
+import { Mail, Phone, Globe, BookOpen, Twitter, Instagram, Youtube, Github } from 'lucide-react';
 import { ThreadsIcon } from './icons/ThreadsIcon';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -35,7 +35,7 @@ export const ContactSection = () => {
   const [contactInfo, setContactInfo] = useState<ContactInfo>({
     email: 'airroad1004@gmail.com',
     phone: '010-8887-9487',
-    address: '주소 입력란',
+    address: 'Notion Homepage',
     socialMedia: {
       twitter: 'https://twitter.com/airroad1004',
       instagram: 'https://instagram.com/airroad1004',
@@ -233,47 +233,72 @@ export const ContactSection = () => {
               </form>
             </div>
 
-            {/* Contact Info */}
-            <div className="space-y-6 flex flex-col">
-              <div className="bg-card rounded-2xl p-8 card-morph glow-pulse">
-                <h3 className="text-xl font-bold text-foreground mb-6">Direct Contact</h3>
-                <div className="space-y-4" role="list">
-                  <div
-                    className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"
-                    role="listitem"
+            {/* Contact Info - Single unified box matching form height */}
+            <div className="bg-card rounded-2xl p-8 card-morph glow-pulse h-full flex flex-col">
+              <h3 className="text-xl font-bold text-foreground mb-6">Direct Contact</h3>
+              <div className="space-y-4 flex-1" role="list">
+                <div
+                  className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"
+                  role="listitem"
+                >
+                  <Mail className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                  <a
+                    href={`mailto:${contactInfo?.email || 'hello@naija.com'}`}
+                    className="focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+                    aria-label={`Email us at ${contactInfo?.email || 'hello@naija.com'}`}
                   >
-                    <Mail className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
-                    <a
-                      href={`mailto:${contactInfo?.email || 'hello@naija.com'}`}
-                      className="focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
-                      aria-label={`Email us at ${contactInfo?.email || 'hello@naija.com'}`}
-                    >
-                      {contactInfo?.email || 'hello@naija.com'}
-                    </a>
-                  </div>
-                  <div
-                    className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"
-                    role="listitem"
+                    {contactInfo?.email || 'hello@naija.com'}
+                  </a>
+                </div>
+                <div
+                  className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"
+                  role="listitem"
+                >
+                  <Phone className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                  <a
+                    href={`tel:${(contactInfo?.phone || '+234 800 NAIJA').replace(/\s/g, '')}`}
+                    className="focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+                    aria-label={`Call us at ${contactInfo?.phone || '+234 800 NAIJA'}`}
                   >
-                    <Phone className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
-                    <a
-                      href={`tel:${(contactInfo?.phone || '+234 800 NAIJA').replace(/\s/g, '')}`}
-                      className="focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
-                      aria-label={`Call us at ${contactInfo?.phone || '+234 800 NAIJA'}`}
-                    >
-                      {contactInfo?.phone || '+234 800 NAIJA'}
-                    </a>
-                  </div>
-                  <div className="flex items-center gap-3 text-muted-foreground" role="listitem">
-                    <MapPin className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
-                    <span>{contactInfo?.address || 'Lagos, Nigeria'}</span>
-                  </div>
+                    {contactInfo?.phone || '+234 800 NAIJA'}
+                  </a>
+                </div>
+                <div
+                  className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"
+                  role="listitem"
+                >
+                  <Globe className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                  <a
+                    href="https://buly.kr/4QoUZFI"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+                    aria-label="Visit Notion Homepage"
+                  >
+                    Notion Homepage
+                  </a>
+                </div>
+                <div
+                  className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"
+                  role="listitem"
+                >
+                  <BookOpen className="h-5 w-5 flex-shrink-0 text-[#03C75A]" aria-hidden="true" />
+                  <a
+                    href="https://blog.naver.com/02korea-"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+                    aria-label="Visit Naver Blog"
+                  >
+                    Naver Blog
+                  </a>
                 </div>
               </div>
 
-              <div className="bg-card rounded-2xl p-8 flex-1 flex flex-col justify-center">
-                <h3 className="text-xl font-bold text-foreground mb-6">Follow Us</h3>
-                <div className="flex flex-wrap gap-1.5 md:gap-2.5" role="list" aria-label="Social media links">
+              {/* Follow Us - integrated into Direct Contact */}
+              <div className="mt-8 pt-6 border-t border-border">
+                <h4 className="text-lg font-bold text-foreground mb-4">Follow Us</h4>
+                <div className="flex flex-wrap gap-3" role="list" aria-label="Social media links">
                   {contactInfo?.socialMedia?.twitter && (
                     <a
                       href={contactInfo.socialMedia.twitter}
